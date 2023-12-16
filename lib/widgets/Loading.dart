@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 class Loading extends StatelessWidget {
+  final double? width;
   const Loading({
-    super.key,
+    super.key,    
+    this.width,
   });
 
   @override
   Widget build(BuildContext context) {
-  return SizedBox(width: 75, child: LottieBuilder.asset("assets/json/loading.json"));
+  return SizedBox(width: width, child: LottieBuilder.asset("assets/json/loading.json"));
   }
 }
