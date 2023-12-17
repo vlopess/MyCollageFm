@@ -1,0 +1,40 @@
+// ignore_for_file: unnecessary_this
+
+class Track {
+  String? artist;
+  String? url;
+  String? name;
+  String? image;
+  String? playnow;
+
+  Track(
+      {this.artist,
+      this.url,
+      this.name,
+      this.image,
+      this.playnow});
+
+  Track.fromJson(Map<String, dynamic> json) {
+    if(json['artist']['name'] == null){
+      artist = json['artist']['#text'];
+    }else{
+      artist =  json['artist']['name'];
+    }    
+    url = json['url'];
+    name = json['name'];
+    image = json['image'][2]['#text'];    
+    if(json['@attr'] != null) {
+      playnow = json['@attr']['nowplaying'];
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['artist'] = this.artist!;
+    data['url'] = this.url;
+    data['name'] = this.name;
+    data['image'] = this.image;
+    data['nowplaying'] = this.playnow;
+    return data;
+  }
+}
