@@ -1,22 +1,23 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import 'package:my_collage_fm/utils/couleurs.dart';
 
 Widget textField({String? title, TextEditingController? controller}) {
   return TextFormField(
-      style: const TextStyle(color: Colors.black,fontFamily: "Barlow"),
+      cursorColor: Couleurs.primaryColor,      
+      style: const TextStyle(color: Couleurs.primaryColor ),
       decoration: InputDecoration( 
         focusedBorder:  OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: Colors.black), 
+          borderSide: const BorderSide(color: Couleurs.primaryColor), 
         ),   
-        labelText: title,
-        
-        focusColor: Colors.black,
-        hoverColor: Colors.black,
-        fillColor: Colors.white,
-        hintStyle: const TextStyle(color: Colors.black),
-        labelStyle: const TextStyle(color: Colors.black),
+        labelText: title,        
+        focusColor: Couleurs.primaryColor,
+        hoverColor: Couleurs.primaryColor,
+        fillColor: Couleurs.primaryColor,
+        hintStyle: const TextStyle(color: Couleurs.primaryColor),
+        labelStyle: const TextStyle(color: Couleurs.primaryColor),
         border: OutlineInputBorder( 
           borderSide: const BorderSide(color: Colors.pink),
           borderRadius: BorderRadius.circular(10)),
