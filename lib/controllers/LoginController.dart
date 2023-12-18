@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_collage_fm/models/user.dart';
 import 'package:my_collage_fm/service/apiService.dart';
+import 'package:my_collage_fm/service/prefs_service.dart';
 
 class LoginController {
 
@@ -12,6 +13,7 @@ class LoginController {
 
   Future<User> getUser() async {
       String userName = crtUsername.text;
+      SharedPreference.save(userName);
       return await ApiService.getAllInfoUser(userName);
   }
 
