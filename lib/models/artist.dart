@@ -15,7 +15,7 @@ class Artist {
 
   Artist.fromJson(Map<String, dynamic> json) {
     if(json['image'] != null) {
-      image = json['image'][2]['#text'];
+      image = json['image'][3]['#text'];
     }    
     url = json['url'];
     if(json['playcount'] != null) {

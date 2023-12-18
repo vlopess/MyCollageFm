@@ -33,7 +33,7 @@ class User {
     realname = json['realname'];
     playcount = json['playcount'];
     artistCount = json['artist_count'];
-    image = json['image'][2]['#text'];    
+    image = json['image'][3]['#text'];    
     country = json['country'];
     url = json['url'];
   }

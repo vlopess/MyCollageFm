@@ -15,6 +15,7 @@ class ApiService {
 
   static Future<User> getAllInfoUser(String userName) async {
     try {
+        //https://ws.audioscrobbler.com/2.0/?method=track.getinfo&artist=misfits&track=helena&api_key=53ca750ff08680650a1aa431bf02a97a&format=json
         User user = User();
         // 1) Pega os dados básicos do user [x]
         Uri url = Uri.parse("https://ws.audioscrobbler.com/2.0/?method=user.getinfo&user=$userName&api_key=$apiKey&format=json");
@@ -24,11 +25,24 @@ class ApiService {
           user = User.fromJson(list['user']);
         }
         // 2) Pega as faixas preferidas do user [x]
-        url = Uri.parse("https://ws.audioscrobbler.com/2.0/?method=user.getlovedtracks&user=$userName&api_key=$apiKey&format=json");
+        url = Uri.parse("https://ws.audioscrobbler.com/2.0/?method=user.getlovedtracks&user=$userName&api_key=$apiKey&limit=10&format=json");
         responsed = await http.get(url);
         if (responsed.statusCode == 200) {
           var list = jsonDecode(responsed.body);
-          user.lovedtracks = Lovedtracks.fromJson(list['lovedtracks']);
+          user.lovedtracks = Lovedtracks.fromJson(list['lovedtracks']);          
+          for (var e in user.lovedtracks.track!) {
+            url = Uri.parse("https://ws.audioscrobbler.com/2.0/?method=track.getinfo&artist=${e.artist}&track=${e.name}&api_key=53ca750ff08680650a1aa431bf02a97a&format=json");
+            responsed = await http.get(url);
+            if(responsed.statusCode == 200){
+              var list = jsonDecode(responsed.body);
+              if(list['error'] == null){                           
+                if(list['track']['album'] != null){
+                  var realImage = list['track']['album']['image'][2]['#text'];
+                  e.image = realImage;
+                } 
+              }
+            }
+          }
         }
         // 3) Pega as faixas recentes do user [ok]
         url = Uri.parse("https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=$userName&api_key=$apiKey&limit=1&format=json");
@@ -45,6 +59,29 @@ class ApiService {
           var list = jsonDecode(responsed.body);
           list = list['toptracks'];
           user.toptrack = List<Track>.from((list['track'] as List<dynamic>).map<Track>((x) => Track.fromJson(x as Map<String, dynamic>)));
+          for (var e in user.toptrack) {            
+            url = Uri.parse("https://ws.audioscrobbler.com/2.0/?method=track.getinfo&artist=${e.artist}&track=${e.name}&api_key=53ca750ff08680650a1aa431bf02a97a&format=json");
+            responsed = await http.get(url);
+            if(responsed.statusCode == 200){
+              var list = jsonDecode(responsed.body);
+              if(list['error'] == null){
+                if(list['track']['album'] != null){
+                  var realImage = list['track']['album']['image'][2]['#text'];
+                  e.image = realImage;
+                }else{
+                  url = Uri.parse("https://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&artist=${e.artist}&api_key=53ca750ff08680650a1aa431bf02a97a&format=json");
+                  responsed = await http.get(url);
+                  if(responsed.statusCode == 200){
+                    var list = jsonDecode(responsed.body);
+                    if(list['topalbums'] != null){
+                      var realImage = list['topalbums']['album'][0]['image'][3]['#text'];
+                      e.image = realImage;
+                    }
+                  }
+                }
+              }              
+            }
+          }
         }
         // 4) Pega top artista do user [ok]
         url = Uri.parse("https://ws.audioscrobbler.com/2.0/?method=user.gettopartists&user=$userName&api_key=$apiKey&limit=5&format=json");
@@ -53,6 +90,17 @@ class ApiService {
           var list = jsonDecode(responsed.body);
           list = list['topartists'];
           user.topartists = List<Artist>.from((list['artist'] as List<dynamic>).map<Artist>((x) => Artist.fromJson(x as Map<String, dynamic>)));
+          for (var e in user.topartists!) {
+            url = Uri.parse("https://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&artist=${e.name}&api_key=53ca750ff08680650a1aa431bf02a97a&format=json");
+            responsed = await http.get(url);
+            if(responsed.statusCode == 200){
+              var list = jsonDecode(responsed.body);
+              if(list['topalbums']['album'] != null){
+                var realImage = list['topalbums']['album'][0]['image'][3]['#text'];
+                e.image = realImage;
+              }
+            }
+          }
         }
         // 4) Pega top albuns do user [ok]
         url = Uri.parse("https://ws.audioscrobbler.com/2.0/?method=user.gettopalbums&user=$userName&api_key=$apiKey&limit=5&format=json");

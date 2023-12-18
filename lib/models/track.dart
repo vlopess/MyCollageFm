@@ -1,5 +1,7 @@
 // ignore_for_file: unnecessary_this
 
+import 'dart:convert';
+
 class Track {
   String? artist;
   String? url;
@@ -21,8 +23,10 @@ class Track {
       artist =  json['artist']['name'];
     }    
     url = json['url'];
-    name = json['name'];
-    image = json['image'][2]['#text'];    
+    String jsonString = '{"texto": "${json['name']}"}';
+    var decodedJson = jsonDecode(utf8.decode(jsonString.runes.toList()));
+    name = decodedJson['texto'];
+    image = json['image'][3]['#text'];    
     if(json['@attr'] != null) {
       playnow = json['@attr']['nowplaying'];
     }
