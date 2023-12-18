@@ -90,8 +90,7 @@ class _LoginState extends State<Login> {
                             setState(() {
                               tapped = !tapped;
                             });                           
-                            await controller.getUser().then((user) => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Home(user: user)))
-                            );                            
+                            await controller.getUser().then((user) => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Home(user: user))));                            
                           }
                         }, 
                         child: const  Text('Let Me In!', style: TextStyle(fontFamily: "Barlow")

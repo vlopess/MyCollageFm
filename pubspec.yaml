@@ -41,6 +41,9 @@ dependencies:
   lottie: ^1.1.0
   http: ^1.1.0
   bottom_navy_bar: ^6.0.0
+  url_launcher: ^6.2.2
+  pref: ^2.7.2
+  shared_preferences: ^2.2.2
 
 dev_dependencies:
   flutter_test:
