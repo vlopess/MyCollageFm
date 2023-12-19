@@ -1,5 +1,6 @@
   import 'package:flutter/material.dart';
 import 'package:my_collage_fm/models/album.dart';
+import 'package:my_collage_fm/pages/home/components/lovedtrackcomponent.dart';
 import 'package:my_collage_fm/utils/couleurs.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -41,7 +42,7 @@ Widget topalbumscomponent({required List<Album> albuns,required String title}) =
                 }
               },
               child: Image.network(
-                album.image!, 
+                verificarImagem(album.image), 
                 fit: BoxFit.cover,
               ),
             ),

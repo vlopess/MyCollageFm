@@ -1,5 +1,6 @@
   import 'package:flutter/material.dart';
 import 'package:my_collage_fm/models/artist.dart';
+import 'package:my_collage_fm/pages/home/components/lovedtrackcomponent.dart';
 import 'package:my_collage_fm/utils/couleurs.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -40,7 +41,7 @@ Widget topartistscomponent({required List<Artist> artists,required String title}
                 }
               },
               child: Image.network(
-                artist.image!, 
+                verificarImagem(artist.image!), 
                 fit: BoxFit.cover,
               ),
             ),

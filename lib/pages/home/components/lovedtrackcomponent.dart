@@ -33,26 +33,25 @@ Widget lovedTrackComponent({required List<Track> tracks}) => Padding(
     width: 100,
     child: Column(
       children: [
-        Expanded(child: AspectRatio(
-          aspectRatio: 4 /3,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: GestureDetector(
-              onTap: () async{
-                var url = Uri.parse(track.url!);
-                if (!await launchUrl(url)) {
-                  throw Exception('Could not launch $url');
-                }
-              },
-              child: Image.network(
-                track.image!, 
-                fit: BoxFit.cover,
-              ),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(20),
+          child: GestureDetector(
+            onTap: () async{
+              var url = Uri.parse(track.url!);
+              if (!await launchUrl(url)) {
+                throw Exception('Could not launch $url');
+              }
+            },
+            child: Image.network(
+              verificarImagem(track.image), 
+              fit: BoxFit.cover,
             ),
           ),
-        )),
+        ),
         const SizedBox(height: 8),
         Text(track.name!, overflow: TextOverflow.visible,style: const  TextStyle(fontFamily: 'Barlow', fontSize: 18, color: Couleurs.white, fontWeight: FontWeight.bold),)
       ],
     ),
   );
+
+String verificarImagem(String? image) => image!.isEmpty ? 'https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png':image;
