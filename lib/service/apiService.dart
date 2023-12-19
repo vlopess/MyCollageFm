@@ -8,6 +8,7 @@ import 'package:my_collage_fm/models/artist.dart';
 import 'package:my_collage_fm/models/lovedtracks.dart';
 import 'package:my_collage_fm/models/track.dart';
 import 'package:my_collage_fm/models/user.dart';
+import 'package:my_collage_fm/service/prefs_service.dart';
 
 
 class ApiService {
@@ -110,6 +111,7 @@ class ApiService {
           list = list['topalbums'];
           user.topalbums = List<Album>.from((list['album'] as List<dynamic>).map<Album>((x) => Album.fromJson(x as Map<String, dynamic>)));
         }        
+        SharedPreference.save(userName);
         return user;
       
     } catch (ex) {
