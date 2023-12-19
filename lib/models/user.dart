@@ -1,5 +1,7 @@
 // ignore_for_file: file_names
 
+import 'dart:convert';
+
 import 'package:my_collage_fm/models/album.dart';
 import 'package:my_collage_fm/models/artist.dart';
 import 'package:my_collage_fm/models/lovedtracks.dart';
@@ -15,7 +17,8 @@ class User {
   String? url;  
   late Lovedtracks lovedtracks;
   late Track recentTrack;
-  late List<Track> toptrack;
+  late List<Track> toptracks;
+  late Track toptrack;
   late List<Artist>? topartists;
   late List<Album>? topalbums;
 
@@ -49,4 +52,10 @@ class User {
     data['url'] = url;
     return data;
   }
+}
+
+String formatar(String value) {
+    String jsonString = '{"texto": "$value"}';
+    var decodedJson = jsonDecode(utf8.decode(jsonString.runes.toList()));
+    return decodedJson['texto'];
 }

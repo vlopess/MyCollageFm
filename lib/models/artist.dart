@@ -1,5 +1,7 @@
 // ignore_for_file: unnecessary_this
 
+import 'package:my_collage_fm/models/user.dart';
+
 class Artist {
   String? image;
   String? url;
@@ -21,7 +23,7 @@ class Artist {
     if(json['playcount'] != null) {
       playcount = json['playcount'];
     }
-    name = json['name'];
+    name = formatar(json['name']);
   }
 
   Map<String, dynamic> toJson() {

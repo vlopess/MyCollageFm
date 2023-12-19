@@ -2,6 +2,8 @@
 
 import 'dart:convert';
 
+import 'package:my_collage_fm/models/user.dart';
+
 class Track {
   String? artist;
   String? url;
@@ -18,9 +20,9 @@ class Track {
 
   Track.fromJson(Map<String, dynamic> json) {
     if(json['artist']['name'] == null){
-      artist = json['artist']['#text'];
+      artist = formatar(json['artist']['#text']);
     }else{
-      artist =  json['artist']['name'];
+      artist = formatar(json['artist']['name']);      
     }    
     url = json['url'];
     String jsonString = '{"texto": "${json['name']}"}';
