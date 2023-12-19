@@ -58,8 +58,8 @@ class ApiService {
         if (responsed.statusCode == 200) {
           var list = jsonDecode(responsed.body);
           list = list['toptracks'];
-          user.toptrack = List<Track>.from((list['track'] as List<dynamic>).map<Track>((x) => Track.fromJson(x as Map<String, dynamic>)));
-          for (var e in user.toptrack) {            
+          user.toptracks = List<Track>.from((list['track'] as List<dynamic>).map<Track>((x) => Track.fromJson(x as Map<String, dynamic>)));
+          for (var e in user.toptracks) {            
             url = Uri.parse("https://ws.audioscrobbler.com/2.0/?method=track.getinfo&artist=${e.artist}&track=${e.name}&api_key=53ca750ff08680650a1aa431bf02a97a&format=json");
             responsed = await http.get(url);
             if(responsed.statusCode == 200){
@@ -109,7 +109,7 @@ class ApiService {
           var list = jsonDecode(responsed.body);
           list = list['topalbums'];
           user.topalbums = List<Album>.from((list['album'] as List<dynamic>).map<Album>((x) => Album.fromJson(x as Map<String, dynamic>)));
-        }
+        }        
         return user;
       
     } catch (ex) {
