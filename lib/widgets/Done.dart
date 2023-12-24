@@ -10,6 +10,6 @@ class Done extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-  return SizedBox(width: 75, child: LottieBuilder.asset("assets/json/done.json"));
+  return SizedBox(width: 75, child: LottieBuilder.asset("assets/json/done.json",repeat: false));
   }
 }
