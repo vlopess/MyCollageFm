@@ -15,8 +15,8 @@ class ColumnCustom extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Column(        
         children: [
-          Text(label, style: const TextStyle(fontFamily: "Barlow", fontWeight: FontWeight.bold, fontSize: 17, color: Couleurs.primaryColor)),                        
-          Text(title, style: const TextStyle(fontFamily: "Barlow", color: Couleurs.white, fontSize: 13)),
+          Text(label,overflow: TextOverflow.ellipsis, style: const TextStyle(fontFamily: "Barlow", fontWeight: FontWeight.bold, fontSize: 17, color: Couleurs.primaryColor)),                        
+          Text(title,overflow: TextOverflow.ellipsis, style: const TextStyle(fontFamily: "Barlow", color: Couleurs.white, fontSize: 13)),
         ],
       ),
     );
