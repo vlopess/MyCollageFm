@@ -10,9 +10,8 @@ class LoginController {
 
   TextEditingController get crtUsername => _crtUsername;
 
-  Future<User> getUser() async {
+  Future<User> findUser() async {
       String userName = crtUsername.text;
-      return await ApiService.getAllInfoUser(userName);
+      return await ApiService.findUserByUsername(userName);
   }
-
 }
