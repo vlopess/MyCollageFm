@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_collage_fm/models/user.dart';
 import 'package:my_collage_fm/pages/home/home_page.dart';
 import 'package:my_collage_fm/pages/login_page.dart';
-import 'package:my_collage_fm/service/apiService.dart';
+import 'package:my_collage_fm/pages/splash_page.dart';
 import 'package:my_collage_fm/service/prefs_service.dart';
 import 'package:my_collage_fm/utils/couleurs.dart';
 void main() {
@@ -21,6 +21,10 @@ class MyApp extends StatelessWidget {
         ),
       debugShowCheckedModeBanner: false,
       home: const Authenticate(),
+      //const Authenticate(),
+      routes: {
+        '/login' : (_) => const Login(),
+      },
     );
   }
 }
@@ -33,37 +37,28 @@ Widget build(BuildContext context) {
   return FutureBuilder(
     future: auth(), 
     builder: (context, snapshot) {
-      String? userName;
-      if(snapshot.connectionState == ConnectionState.waiting) return const Center(child: Text("Aguarde ..."),);
+      User user;
+      if(snapshot.connectionState == ConnectionState.waiting) return const SplashPage();
       if(snapshot.connectionState == ConnectionState.done){
-        userName = snapshot.data;
-        if (userName == null) {
+        user = snapshot.data!;
+        if (user.isNull()) {
           return const Login();
         }
-      }      
-      return FutureBuilder(
-        future: getUser(userName!), 
-        builder: (context, snapshot) {
-          if(snapshot.connectionState == ConnectionState.done){
-            var user = snapshot.data;
-            return Home(user: user!);
-          }
-          return const Center(child: Text("Aguarde ..."));
-        },
-      );
+        return Home(userName: user.name!,userImage: user.image!, userUrl: user.url!,);
+      } 
+      return const SplashPage();
     },
   );
 }
 
   
-  Future<String?> auth() async{
+  Future<User?> auth() async{
       var userName = await SharedPreference.getUsername();
-      return userName;
-  }
-  
-  Future<User> getUser(String userName) async {
-    return await ApiService.getAllInfoUser(userName);
-  }
+      var userImage = await SharedPreference.getUserImage();
+      var userUrl = await SharedPreference.getUserUrl();
+      User user = User(image: userImage, name: userName, url: userUrl);
+      return user;
+  }  
 }
 
 
