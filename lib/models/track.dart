@@ -1,7 +1,4 @@
 // ignore_for_file: unnecessary_this
-
-import 'dart:convert';
-
 import 'package:my_collage_fm/models/user.dart';
 
 class Track {
@@ -12,10 +9,10 @@ class Track {
   String? playnow;
 
   Track(
-      {this.artist,
-      this.url,
-      this.name,
-      this.image,
+      {this.artist='',
+      this.url='',
+      this.name='',
+      this.image='',
       this.playnow});
 
   Track.fromJson(Map<String, dynamic> json) {
@@ -25,9 +22,7 @@ class Track {
       artist = formatar(json['artist']['name']);      
     }    
     url = json['url'];
-    String jsonString = '{"texto": "${json['name']}"}';
-    var decodedJson = jsonDecode(utf8.decode(jsonString.runes.toList()));
-    name = decodedJson['texto'];
+    name = formatar(json['name']);
     image = json['image'][3]['#text'];    
     if(json['@attr'] != null) {
       playnow = json['@attr']['nowplaying'];
