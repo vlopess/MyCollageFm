@@ -13,11 +13,14 @@
 
 <b>MyCollage</b> aplicação mobile para visualizar os dados do [Last.fm](www.last.fm) e consumindo do [last.fm API](https://www.last.fm/api). Funcionando como um clone do Last.fm mobile, apresentando algumas mudanças no layout e novas funcionalidades.
 
+![](https://github.com/vlopess/MyCollageFm/blob/master/images/tela3.png)
+
 ## Funcionalidades
 
-- [] Listagem e filtragem dos dados do usuário
-- [] Scrobbling now
-- [] Uso de ImageUrl
+- [x] Listagem e filtragem dos dados do usuário
+- [x] Scrobbling now
+- [x] Uso de ImageUrl
+- [ ] Gerar Collage 
 
 ## Tecnologias utilizadas
 Esse projeto foi desenvolvido utilizando as seguintes tecnologias:
@@ -25,6 +28,13 @@ Esse projeto foi desenvolvido utilizando as seguintes tecnologias:
 ![](https://skillicons.dev/icons?i=dart,flutter)
 
 ## Demonstração
+
+### Login e listagem
+![](https://github.com/vlopess/MyCollageFm/blob/master/images/video_1.gif)
+![](https://github.com/vlopess/MyCollageFm/blob/master/images/tela1.png)
+### Aplicação do filtro
+![](https://github.com/vlopess/MyCollageFm/blob/master/images/tela2.png)
+![](https://github.com/vlopess/MyCollageFm/blob/master/images/video_2.gif)
 
 
 ## Feedback
