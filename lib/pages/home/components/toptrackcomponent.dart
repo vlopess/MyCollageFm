@@ -1,4 +1,5 @@
-  import 'package:flutter/material.dart';
+  import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
 import 'package:my_collage_fm/models/track.dart';
 import 'package:my_collage_fm/pages/home/components/lovedtrackcomponent.dart';
 import 'package:my_collage_fm/utils/couleurs.dart';
@@ -40,10 +41,14 @@ Widget toptrackcomponent({required List<Track> tracks}) => Padding(
                   throw Exception('Could not launch $url');
                 }
               },
-              child: Image.network(
-                verificarImagem(track.image!), 
+              child: CachedNetworkImage(
+                key: UniqueKey(),
+                imageUrl: verificarImagem(track.image!), 
+                height: 75,
                 fit: BoxFit.cover,
-              ),
+                placeholder: (context, url) => Container(color: Colors.black12,),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
+              )
             ),
           ),
         )),

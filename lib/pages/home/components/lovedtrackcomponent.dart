@@ -1,4 +1,5 @@
-  import 'package:flutter/material.dart';
+  import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
 import 'package:my_collage_fm/models/track.dart';
 import 'package:my_collage_fm/utils/couleurs.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -42,16 +43,19 @@ Widget lovedTrackComponent({required List<Track> tracks}) => Padding(
                 throw Exception('Could not launch $url');
               }
             },
-            child: Image.network(
-              verificarImagem(track.image), 
+            child: CachedNetworkImage(
+              key: UniqueKey(),
+              imageUrl: verificarImagem(track.image),
               fit: BoxFit.cover,
-            ),
+              placeholder: (context, url) => Container(color: Colors.black12,),
+              errorWidget: (context, url, error) => const Icon(Icons.error),
+            )
           ),
         ),
         const SizedBox(height: 8),
-        Text(track.name!, overflow: TextOverflow.visible,style: const  TextStyle(fontFamily: 'Barlow', fontSize: 18, color: Couleurs.white, fontWeight: FontWeight.bold),)
+        SizedBox(height: 20,child: Text(track.name!, overflow: TextOverflow.visible,style: const  TextStyle(fontFamily: 'Barlow', fontSize: 15, color: Couleurs.white, fontWeight: FontWeight.bold),))
       ],
     ),
   );
 
-String verificarImagem(String? image) => image!.isEmpty ? 'https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png':image;
+String verificarImagem(String? image) => image!.isEmpty  ? 'https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png':image;
