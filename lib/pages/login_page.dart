@@ -1,7 +1,11 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
+import 'package:my_collage_fm/components/snackBarCustom.dart';
 import 'package:my_collage_fm/components/textField.dart';
 import 'package:my_collage_fm/controllers/LoginController.dart';
 import 'package:my_collage_fm/pages/home/home_page.dart';
+import 'package:my_collage_fm/service/prefs_service.dart';
 import 'package:my_collage_fm/utils/couleurs.dart';
 import 'package:my_collage_fm/widgets/Loading.dart';
 import 'package:my_collage_fm/widgets/WaveClipperBottom.dart';
@@ -89,8 +93,19 @@ class _LoginState extends State<Login> {
                           if(_formKey.currentState!.validate()){ 
                             setState(() {
                               tapped = !tapped;
-                            });                           
-                            await controller.getUser().then((user) => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Home(user: user))));                            
+                            });       
+                            try {
+                              await controller.findUser().then((user) {
+                                SharedPreference.save(user);
+                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Home(userName: user.name!, userImage: user.image!,userUrl: user.url!,)));
+                              });                            
+                            } catch (e) {
+                              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(behavior: SnackBarBehavior.floating,elevation: 0, backgroundColor: Colors.transparent,content: SnackBarCustom(title: 'User not Found', cor: Couleurs.grey200)));                           
+                            }  finally{
+                              setState(() {
+                              tapped = !tapped;
+                            }); 
+                            }                  
                           }
                         }, 
                         child: const  Text('Let Me In!', style: TextStyle(fontFamily: "Barlow")
@@ -129,5 +144,6 @@ class _LoginState extends State<Login> {
         ),
       ),
     );
-  }
+  }  
 }
+
