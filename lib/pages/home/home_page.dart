@@ -1,142 +1,135 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:my_collage_fm/components/ColumnCustom.dart';
-import 'package:my_collage_fm/models/user.dart';
-import 'package:my_collage_fm/pages/home/components/lovedtrackcomponent.dart';
-import 'package:my_collage_fm/pages/home/components/topalbumscomponent.dart';
-import 'package:my_collage_fm/pages/home/components/topartistscomponent.dart';
-import 'package:my_collage_fm/pages/home/components/toptrackcomponent.dart';
-import 'package:my_collage_fm/pages/login_page.dart';
-import 'package:my_collage_fm/service/apiService.dart';
-import 'package:my_collage_fm/service/prefs_service.dart';
+import 'package:my_collage_fm/pages/home/profile_page.dart';
 import 'package:my_collage_fm/utils/couleurs.dart';
-import 'package:my_collage_fm/widgets/Loading.dart';
-import 'package:url_launcher/url_launcher.dart';
-
+import 'package:my_collage_fm/widgets/Done.dart';
 // ignore: must_be_immutable
 class Home extends StatefulWidget {
-  User user;
-  Home({super.key, required this.user});
+  String userName;
+  String userImage;
+  final String userUrl;
+  Home({super.key, required this.userName, required this.userImage, required this.userUrl});
 
   @override
   State<Home> createState() => _HomeState();
 }
+enum SingingCharacter { lafayette, jefferson }
 
 class _HomeState extends State<Home> {  
-  int currentPageIndex = 0;
+  int currentPageIndex = 0;  
+  int? _sliding1 = 0;
+  int? _sliding2 = 0;
+  int? _sliding3 = 0;
+  bool _loading = false;
+  
   @override
   Widget build(BuildContext context) {    
-    //double? height = MediaQuery.of(context).size.height;
-    double? width = MediaQuery.of(context).size.width;
-    double coverHeight = 60;
-    double profileHeight = 144;
-    double top = coverHeight - profileHeight / 2.5;
+    double? height = MediaQuery.of(context).size.height;
     return SafeArea(
       child: Scaffold(
         backgroundColor: Couleurs.grey200,
-        appBar: currentPageIndex == 1 ? AppBar(backgroundColor: Couleurs.primaryColor, centerTitle: true,title:  const Text("Collage Geranator", style: TextStyle(fontFamily: "Barlow"),),automaticallyImplyLeading: false,):null,
+        appBar: currentPageIndex == 1 ? AppBar(backgroundColor: Couleurs.primaryColor, centerTitle: true,title:  const Text("Collage Generator", style: TextStyle(fontFamily: "Barlow"),),automaticallyImplyLeading: false,):null,
           body: RefreshIndicator(
             backgroundColor: Couleurs.grey200,
             color: Couleurs.primaryColor,
-            onRefresh: () async{
-              widget.user = await ApiService.getAllInfoUser(widget.user.name!);
-              setState(() {});
+            onRefresh: () async {
+                setState(() {});    
+                //widget.user = await ApiService.findUserByUsername(widget.user.name!).then((user) => ApiService.getAllInfoUser(user)); 
             },
-            child: <Widget>[
-                SingleChildScrollView(
+            child: <Widget>[    
+                Profile(userName: widget.userName, userImage: widget.userImage, userUrl: widget.userUrl),
+                ///Collage Page////////////////////////////////////////////////
+                Padding(
+                  padding: const EdgeInsets.all(25.0),
                   child: Column(
                     children: [
-                      Stack(
-                        clipBehavior: Clip.none,
-                        alignment: Alignment.topLeft,
-                        children: [
-                          Container(
-                            color: Couleurs.primaryColor,
-                            height: coverHeight,
-                            width: double.infinity,          
-                            child:  Row(     
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,   
-                              children: [
-                                SizedBox(width: width * 0.1),
-                                Center(child: Text(widget.user.name!, style: const  TextStyle(fontFamily: "Barlow", fontWeight: FontWeight.bold, fontSize: 18, color: Colors.white),)),
-                                IconButton(onPressed: () => showSheet(context), icon: const Icon(Icons.more_vert),color: Colors.white,)
-                              ],
-                            ),        
-                          ),
-                          Positioned(
-                            top: top,
-                            child: Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: CircleAvatar(
-                                radius: profileHeight / 3,
-                                backgroundColor: Couleurs.greyDark,
-                                backgroundImage: NetworkImage(widget.user.image!),
-                                        
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            top: coverHeight,
-                            left: coverHeight * 2,
-                            child: Row(
-                                children: [
-                                  ColumnCustom(label: 'Scrobbles', title: widget.user.playcount!),
-                                  ColumnCustom(label: 'Artists', title: widget.user.artistCount!),
-                                  ColumnCustom(label: 'Loved Tracks', title: widget.user.lovedtracks.track!.length.toString()),
-                                ],
-                            ),
-                          ),                                                                                              
-                        ],        
-                      ),
-                      SizedBox(height: profileHeight/2),
-                      ///Visibility(visible: widget.user.recentTrack.playnow != null,child: buildCardTrack(track: widget.user.recentTrack)),
-                      //buildCardTrack(track: widget.user.recentTrack),
-                      Visibility(
-                        visible: widget.user.recentTrack.playnow != null,
-                        child: Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: GestureDetector(
-                              onTap: () async{
-                                var url = Uri.parse(widget.user.recentTrack.url!);
-                                if (!await launchUrl(url)) {
-                                  throw Exception('Could not launch $url');
-                                }
-                              },
-                            child: Container(
-                              height: 75,
-                              decoration: BoxDecoration(color: Couleurs.grey100,borderRadius: BorderRadius.circular(15.0)),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  AspectRatio(
-                                    aspectRatio: 4 /3,
-                                    child: ClipRRect(
-                                      borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), bottomLeft: Radius.circular(20)),
-                                      child:
-                                      Image.network(
-                                        verificarImagem(widget.user.recentTrack.image!), 
-                                        fit: BoxFit.cover,
-                                      ), 
-                                    ),
-                                  ),
-                                  ColumnCustom(label: widget.user.recentTrack.name!,title: widget.user.recentTrack.artist!,),
-                                  const Loading(width: 80),
-                                ],
-                              )
-                            ),
-                          ),
+                    SizedBox(height: height * 0.1),
+                    const Align(
+                      alignment: Alignment.topCenter,
+                      child: Text('Tipo de collage', style: TextStyle(fontFamily: 'Barlow', fontSize: 20, color: Couleurs.white, fontWeight: FontWeight.bold),)),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Align(
+                        alignment: Alignment.topCenter,
+                        child: CupertinoSlidingSegmentedControl(
+                          backgroundColor: Couleurs.primaryColor,
+                          onValueChanged: (int? value) { 
+                            setState(() {
+                              _sliding1 = value;
+                            });
+                            },
+                          groupValue: _sliding1,
+                          children: const {
+                            0:Text("Track"),
+                            1:Text("Artist"),
+                            2:Text("Albums")
+                          },
                         ),
                       ),
-                      Visibility(visible: widget.user.lovedtracks.track!.isNotEmpty,child: lovedTrackComponent(tracks: widget.user.lovedtracks.track!)),
-                      toptrackcomponent(tracks: widget.user.toptracks),
-                      topartistscomponent(artists: widget.user.topartists!, title: 'Top Artists'),
-                      topalbumscomponent(albuns: widget.user.topalbums!, title: 'Top Albums'),  
-                    ],
-                  ),
+                    ),     
+                    const Align(
+                      alignment: Alignment.topCenter,
+                      child: Text('Tempo da collage', style: TextStyle(fontFamily: 'Barlow', fontSize: 20, color: Couleurs.white, fontWeight: FontWeight.bold),)
+                    ),                                                                                       
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Align(
+                        alignment: Alignment.topCenter,
+                        child: CupertinoSlidingSegmentedControl(
+                          backgroundColor: Couleurs.primaryColor,
+                          onValueChanged: (int? value) { 
+                            setState(() {
+                              _sliding2 = value;
+                            });
+                            },
+                          groupValue: _sliding2,
+                          children: const {
+                            0:Text("OverAll"),
+                            1:Text("7 days"),
+                            2:Text("1 month")
+                          },
+                        ),
+                      ),
+                    ),
+                    const Align(
+                      alignment: Alignment.topCenter,
+                      child: Text('Tamanho da collage', style: TextStyle(fontFamily: 'Barlow', fontSize: 20, color: Couleurs.white, fontWeight: FontWeight.bold),)),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Align(
+                        alignment: Alignment.topCenter,
+                        child: CupertinoSlidingSegmentedControl(
+                          backgroundColor: Couleurs.primaryColor,
+                          onValueChanged: (int? value) { 
+                            setState(() {
+                              _sliding3 = value;
+                            });
+                            },
+                          groupValue: _sliding3,
+                          children: const {
+                            0:Text("3x3"),
+                            1:Text("4x4"),
+                            2:Text("5x5")
+                          },
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: height * 0.05),
+                    Center(
+                      child: _loading ? const CircularProgressIndicator(color: Couleurs.primaryColor,) : ElevatedButton(
+                        style: ElevatedButton.styleFrom(backgroundColor: Couleurs.primaryColor),
+                        onPressed: () async{
+                          setState(() => _loading = !_loading);
+                          await Future.delayed(const Duration(seconds: 1)).then((value) => _openDialog(context));                          
+                          setState(() => _loading = !_loading);
+                        }, 
+                        child: const  Text('Gerar Collage', style: TextStyle(fontFamily: "Barlow")),
+                      ),
+                    ),
+                  ],
                 ),
-            
-                ///Collage Page
-                const Center(child: Text("Collage Page Content"),)
+              ),
             ][currentPageIndex],
           ),
           bottomNavigationBar: BottomNavyBar(
@@ -153,25 +146,56 @@ class _HomeState extends State<Home> {
     );
   }
 
+  // FutureBuilder<User> onRefresh() {
+  //   return FutureBuilder(
+  //             future: ApiService.findUserByUsername(widget.user.name!).then((user) => ApiService.getAllInfoUser(user)), 
+  //             builder: (context, snapshot) {
+  //               if(snapshot.connectionState == ConnectionState.waiting){
+  //                 return const ShiningHome();
+  //               }
+  //               if(snapshot.connectionState == ConnectionState.done){
+  //                 if(snapshot.hasError) return const Center(child: Text("error"));
+  //                 setState(() {
+  //                   widget.user = snapshot.data!; 
+  //                 });                     
+  //               }
+  //               return const ShiningHome();
+  //             },
+  //           );
+  // }
 
-  Future<dynamic> showSheet(BuildContext context) {
-    return showModalBottomSheet(
-                                  context: context, 
-                                  backgroundColor: Couleurs.grey200,
-                                  shape: const RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30))),
-                                  builder: (context) {
-                                   return SizedBox(
-                                    height: 100,
-                                    child: Center(child: ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor: Couleurs.primaryColor),
-                                    onPressed: () {
-                                        SharedPreference.remove();
-                                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const Login(),));
-                                    },
-                                    child: const Text("Sair da Conta", style: TextStyle(fontFamily: 'Barlow'),
-                                    ),
-                                   ),
-                                  ),
-                                 );
-                                });
+
+ 
+
+  void _openDialog(BuildContext context){
+    showGeneralDialog(      
+      context: context, 
+      pageBuilder: (context, animation, secondaryAnimation) => Container(),
+      transitionBuilder: (context, animation, secondaryAnimation, child) 
+        => ScaleTransition(
+          scale: Tween<double>(begin: 0.5,end: 1.0).animate(animation),
+          child: FadeTransition(
+            opacity: Tween<double>(begin: 0.5,end: 1.0).animate(animation),
+            child: AlertDialog(
+              backgroundColor: Couleurs.grey200,                              
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Done(),
+                  const Text('Collage gerada com sucesso!', style: TextStyle(fontFamily: "Barlow")),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor: Couleurs.primaryColor),onPressed: () => Navigator.pop(context), child: const Text("Download", style: TextStyle(fontFamily: "Barlow"))),
+                  )
+                ],
+              ),
+              shape: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(16.0),
+                borderSide: BorderSide.none,
+              ),
+            ),
+          ),
+            ),
+    );
   }
 }
