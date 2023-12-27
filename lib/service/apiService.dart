@@ -68,10 +68,10 @@ class ApiService {
     return recentTrack;
   }
 
-  static Future<List<Track>?> gettoptracksUser({String period = 'overall'}) async{
+  static Future<List<Track>?> gettoptracksUser({String period = 'overall', int limit = 10}) async{
     List<Track>? toptracks;
     var userName = await SharedPreference.getUsername();
-    var url = Uri.parse(ApiUrl.buildUrl(Method.gettoptracksUser(userName, period), apiKey));
+    var url = Uri.parse(ApiUrl.buildUrl(Method.gettoptracksUser(userName, period, limit), apiKey));
     var responsed = await http.get(url);
     if (responsed.statusCode == 200) {
       var list = jsonDecode(responsed.body);
@@ -104,10 +104,10 @@ class ApiService {
     return toptracks;
   }
 
-  static Future<List<Artist>?> gettopartistsUser({String period = 'overall'}) async{
+  static Future<List<Artist>?> gettopartistsUser({String period = 'overall', int limit = 10}) async{
     var userName = await SharedPreference.getUsername();
     List<Artist>? topartists;
-    var url = Uri.parse(ApiUrl.buildUrl(Method.gettopartistsUser(userName, period), apiKey));
+    var url = Uri.parse(ApiUrl.buildUrl(Method.gettopartistsUser(userName, period, limit), apiKey));
     var responsed = await http.get(url);
     if (responsed.statusCode == 200) {
       var list = jsonDecode(responsed.body);
@@ -128,9 +128,9 @@ class ApiService {
     return topartists;
   }
 
-  static Future<List<Album>?> gettopalbumsUser({String period = 'overall'}) async{
+  static Future<List<Album>?> gettopalbumsUser({String period = 'overall', int limit = 10}) async{
     var userName = await SharedPreference.getUsername();
-    var url = Uri.parse(ApiUrl.buildUrl(Method.gettopalbumsUser(userName, period), apiKey));
+    var url = Uri.parse(ApiUrl.buildUrl(Method.gettopalbumsUser(userName, period, limit), apiKey));
     List<Album>? topalbums;
     var responsed = await http.get(url);
     if (responsed.statusCode == 200) {

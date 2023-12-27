@@ -22,13 +22,13 @@ abstract class Method {
   static String getrecenttracksUser(String userName) => '$_usergetrecenttracks&user=$userName&limit=10';
 
   static const String _usergettoptracks = 'method=user.gettoptracks';
-  static String gettoptracksUser(String userName, String period) => '$_usergettoptracks&user=$userName&limit=10&period=$period';
+  static String gettoptracksUser(String userName, String period, int limit) => '$_usergettoptracks&user=$userName&limit=$limit&period=$period';
 
   static const String _usergettopartists = 'method=user.gettopartists';
-  static String gettopartistsUser(String userName, String period) => '$_usergettopartists&user=$userName&limit=10&period=$period';
+  static String gettopartistsUser(String userName, String period, int limit) => '$_usergettopartists&user=$userName&limit=$limit&period=$period';
 
   static const String _usergettopalbums = 'method=user.gettopalbums';
-  static String gettopalbumsUser(String userName, String period) => '$_usergettopalbums&user=$userName&limit=10&period=$period';  
+  static String gettopalbumsUser(String userName, String period, int limit) => '$_usergettopalbums&user=$userName&limit=$limit&period=$period';  
 
   static const String _artistgettopalbums = 'method=artist.gettopalbums';
   static String gettopalbumsArtist(String artistName) => '$_artistgettopalbums&artist=$artistName';
