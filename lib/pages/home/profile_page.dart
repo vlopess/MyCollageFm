@@ -220,7 +220,7 @@ class _ProfileState extends State<Profile> {
                 enableAll();
                 _select1 = true;
               });                  
-            }, child: SizedBox(height: 50,child: Text("Last 7 days", style: TextStyle(fontSize: 18, color: _select1 ? Couleurs.primaryColor :Colors.black)),),),
+            }, child: SizedBox(height: 50,child: Text("Last 7 days", style: TextStyle(fontSize: 18, color: _select1 ? Couleurs.primaryColor :Colors.white)),),),
             GestureDetector(onTap: () async{
               Navigator.pop(context);                            
               setState(() {
@@ -228,7 +228,7 @@ class _ProfileState extends State<Profile> {
                 enableAll();
                 _select2 = true;
               });    
-            }, child: SizedBox(height: 50,child: Text("Last 30 days", style: TextStyle(fontSize: 18, color: _select2 ? Couleurs.primaryColor :Colors.black)),),),
+            }, child: SizedBox(height: 50,child: Text("Last 30 days", style: TextStyle(fontSize: 18, color: _select2 ? Couleurs.primaryColor :Colors.white)),),),
             GestureDetector(onTap: () async{
               Navigator.pop(context);
               setState(() {
@@ -236,7 +236,7 @@ class _ProfileState extends State<Profile> {
                 enableAll();
                 _select3 = true;
               });                  
-            }, child: SizedBox(height: 50,child: Text("All Time", style: TextStyle(fontSize: 18, color: _select3 ? Couleurs.primaryColor :Colors.black)),),),
+            }, child: SizedBox(height: 50,child: Text("All Time", style: TextStyle(fontSize: 18, color: _select3 ? Couleurs.primaryColor :Colors.white)),),),
           ],
         ),
     );
