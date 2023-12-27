@@ -20,7 +20,7 @@
 - [x] Listagem e filtragem dos dados do usuário
 - [x] Scrobbling now
 - [x] Uso de ImageUrl
-- [ ] Gerar Collage 
+- [x] Gerar Collage 
 
 ## Tecnologias utilizadas
 Esse projeto foi desenvolvido utilizando as seguintes tecnologias:
