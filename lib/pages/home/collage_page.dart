@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:my_collage_fm/service/apiCollage.dart';
 import 'package:my_collage_fm/utils/couleurs.dart';
 import 'package:my_collage_fm/widgets/Done.dart';
+import 'package:my_collage_fm/widgets/LoadingCollage.dart';
+import 'package:open_file/open_file.dart';
 
 class Collage extends StatefulWidget {
   const Collage({super.key});
@@ -97,16 +99,17 @@ class _CollageState extends State<Collage> {
           ),
           SizedBox(height: height * 0.05),
           Center(
-            child: _loading ? const CircularProgressIndicator(color: Couleurs.primaryColor,) : ElevatedButton(
+            child: _loading ? const LoadingCollage(width: 75) : ElevatedButton(
               style: ElevatedButton.styleFrom(backgroundColor: Couleurs.primaryColor),
               onPressed: () async{
                 setState(() => _loading = !_loading);
                 var tipo = getTipo(_sliding1);                
                 var time = getTime(_sliding2);              
                 var size = getSize(_sliding3);                
-                ApiCollage.gerarCollage(tipo, time, size);
-                await Future.delayed(const Duration(seconds: 1)).then((value) => _openDialog(context));                          
-                setState(() => _loading = !_loading);
+                await ApiCollage.gerarCollage(tipo, time, size).then((value) {
+                  setState(() => _loading = !_loading);
+                  _openDialog(context, value);
+                });                
               }, 
               child: const  Text('Gerar Collage', style: TextStyle(fontFamily: "Barlow")),
             ),
@@ -115,8 +118,8 @@ class _CollageState extends State<Collage> {
       ),
     );
   }
-    void _openDialog(BuildContext context){
-    showGeneralDialog(      
+    void _openDialog(BuildContext context, String filename){
+    showGeneralDialog(    
       context: context, 
       pageBuilder: (context, animation, secondaryAnimation) => Container(),
       transitionBuilder: (context, animation, secondaryAnimation, child) 
@@ -133,7 +136,11 @@ class _CollageState extends State<Collage> {
                   const Text('Collage gerada com sucesso!', style: TextStyle(fontFamily: "Barlow")),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor: Couleurs.primaryColor),onPressed: () => Navigator.pop(context), child: const Text("Download", style: TextStyle(fontFamily: "Barlow"))),
+                    child: ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor: Couleurs.primaryColor),onPressed: () => OpenFile.open(filename), child: const Text("Open", style: TextStyle(fontFamily: "Barlow"))),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor: Couleurs.primaryColor),onPressed: () => Navigator.pop(context), child: const Text("Close", style: TextStyle(fontFamily: "Barlow"))),
                   )
                 ],
               ),
@@ -143,7 +150,7 @@ class _CollageState extends State<Collage> {
               ),
             ),
           ),
-            ),
+        ),
     );
   }
   
