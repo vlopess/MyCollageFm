@@ -8,6 +8,7 @@ import 'package:my_collage_fm/models/artist.dart';
 import 'package:my_collage_fm/models/lovedtracks.dart';
 import 'package:my_collage_fm/models/track.dart';
 import 'package:my_collage_fm/models/user.dart';
+import 'package:my_collage_fm/pages/home/components/lovedtrackcomponent.dart';
 import 'package:my_collage_fm/service/prefs_service.dart';
 import 'package:my_collage_fm/utils/apiurl.dart';
 
@@ -56,7 +57,7 @@ class ApiService {
   static Future<Track?> getrecenttracksUser() async{
     var userName = await SharedPreference.getUsername();
     var url = Uri.parse(ApiUrl.buildUrl(Method.getrecenttracksUser(userName), apiKey));
-    var responsed = await http.get(url);
+    var responsed =  await http.get(url);
     Track recentTrack = Track();
     if (responsed.statusCode == 200) {
       var list = jsonDecode(responsed.body);
@@ -92,13 +93,17 @@ class ApiService {
               if(responsed.statusCode == 200){
                 var list = jsonDecode(responsed.body);
                 if(list['topalbums'] != null){
-                  var realImage = list['topalbums']['album'][0]['image'][3]['#text'];
-                  e.image = realImage;
+                  var lista = list['topalbums']['album'];
+                  if(lista.isNotEmpty){
+                    var realImage = list['topalbums']['album'][0]['image'][3]['#text'];
+                    e.image = realImage;
+                  }
                 }
               }
             }
           }              
         }
+        e.image = verificarImagem(e.image);
       }
     }
     return toptracks;
@@ -123,6 +128,7 @@ class ApiService {
             e.image = realImage;
           }
         }
+        e.image = verificarImagem(e.image);
       }
     }
     return topartists;
