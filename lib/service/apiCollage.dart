@@ -1,16 +1,18 @@
 // ignore_for_file: file_names
-
+import 'dart:io';
 
 import 'package:my_collage_fm/models/dto.dart';
 import 'package:my_collage_fm/service/apiService.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:path_provider/path_provider.dart';
+
 class ApiCollage {
 
   static String address = "http://192.168.10.22:5000/generateCollage";
 
-  static Future<void> gerarCollage(String tipo, String time, int size) async {
+  static Future<String> gerarCollage(String tipo, String time, int size) async {
       int limit = size * size;
       String period = time;
       Dto dto = Dto(null,id: idGenerator(), size: size);
@@ -26,16 +28,21 @@ class ApiCollage {
         var albums = await ApiService.gettopalbumsUser(period: period, limit: limit);
         dto.setCellListAlbum(albums!);
       }
-      await generateCollage(dto);
+      return await generateCollage(dto);
   }
-  static Future<Dto?> generateCollage(Dto dados) async {
+  static Future<String> generateCollage(Dto dados) async {
     var url = Uri.parse(address);
     var data = dados.toMap();
-    final responsed = await http.post(url, body: {'data':json.encode(data)});
-    if (responsed.statusCode == 200) {
-      return null;
-    }
-    return null;
+    final response = await http.post(url, body: {'data':json.encode(data)});
+    String filename = "";
+    if (response.statusCode == 200) {
+      Directory tempDir = await getTemporaryDirectory();
+      String tempPath = tempDir.path;
+      filename = '$tempPath/${dados.id}.png';
+      File file = File(filename);
+      await file.writeAsBytes(response.bodyBytes);
+     }
+    return filename;
   }
 }
 
