@@ -10,7 +10,7 @@ import 'package:path_provider/path_provider.dart';
 
 class ApiCollage {
 
-  static String address = "http://192.168.10.22:5000/generateCollage";
+  static String address = "https://victorsites.pythonanywhere.com/api/v1/generateCollage";
 
   static Future<String> gerarCollage(String tipo, String time, int size) async {
       int limit = size * size;
