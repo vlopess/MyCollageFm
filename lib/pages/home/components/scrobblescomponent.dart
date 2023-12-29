@@ -28,16 +28,19 @@ Widget scrobbling({required Track track}){
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  ClipRRect(
-                    borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(15), topLeft: Radius.circular(15)),
-                    child: CachedNetworkImage(
-                      key: UniqueKey(),
-                      imageUrl: track.image!,
-                      height: 75,
-                      fit: BoxFit.cover,
-                      placeholder: (context, url) => Container(color: Colors.black12,),
-                      errorWidget: (context, url, error) => const Icon(Icons.error),
-                    )
+                  SizedBox(
+                    width: 80,
+                    child: ClipRRect(
+                      borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(15), topLeft: Radius.circular(15)),
+                      child: CachedNetworkImage(
+                        key: UniqueKey(),
+                        imageUrl: track.image!,
+                        height: 75,
+                        fit: BoxFit.cover,
+                        placeholder: (context, url) => Container(color: Colors.black12,),
+                        errorWidget: (context, url, error) => const Icon(Icons.error),
+                      )
+                    ),
                   ),
                   SizedBox(
                     width: 200,
