@@ -28,7 +28,7 @@ class Dto {
   setCellListAlbum(List<Album> albums){
       List<Cell> cellList = [];
       for (var e in albums) {
-        Cell cell = Cell(e.image!, '${e.artist} - ${e.name!}');
+        Cell cell = Cell(e.image!, '${e.artist!.name} - ${e.name!}');
         cellList.add(cell);
       }
       this.cellList = cellList; 
