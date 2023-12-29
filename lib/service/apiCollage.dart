@@ -29,20 +29,25 @@ class ApiCollage {
         dto.setCellListAlbum(albums!);
       }
       return await generateCollage(dto);
+      
   }
   static Future<String> generateCollage(Dto dados) async {
-    var url = Uri.parse(address);
-    var data = dados.toMap();
-    final response = await http.post(url, body: {'data':json.encode(data)});
     String filename = "";
-    if (response.statusCode == 200) {
-      Directory tempDir = await getTemporaryDirectory();
-      String tempPath = tempDir.path;
-      filename = '$tempPath/${dados.id}.png';
-      File file = File(filename);
-      await file.writeAsBytes(response.bodyBytes);
-     }
-    return filename;
+    try {
+      var url = Uri.parse(address);
+      var data = dados.toMap();
+      final response = await http.post(url, body: {'data':json.encode(data)});
+      if (response.statusCode == 200) {
+        Directory tempDir = await getTemporaryDirectory();
+        String tempPath = tempDir.path;
+        filename = '$tempPath/${dados.id}.pdf';
+        File file = File(filename);
+        await file.writeAsBytes(response.bodyBytes);      
+      }
+      return filename;
+    } catch (e) {
+      return filename;
+    }
   }
 }
 
