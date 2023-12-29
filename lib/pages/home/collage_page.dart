@@ -1,4 +1,5 @@
 
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_collage_fm/service/apiCollage.dart';
@@ -26,78 +27,90 @@ class _CollageState extends State<Collage> {
         padding: const EdgeInsets.all(25.0),
         child: Column(
           children: [
-          SizedBox(height: height * 0.1),
-          const Align(
-            alignment: Alignment.topCenter,
-            child: Text('Tipo de collage', style: TextStyle(fontFamily: 'Barlow', fontSize: 20, color: Couleurs.white, fontWeight: FontWeight.bold),)),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Align(
-              alignment: Alignment.topCenter,
-              child: CupertinoSlidingSegmentedControl(
-                backgroundColor: Couleurs.primaryColor,
-                onValueChanged: (int? value) { 
-                  setState(() {
-                    _sliding1 = value;
-                  });
-                  },
-                groupValue: _sliding1,
-                children: const {
-                  0:Text("Track"),
-                  1:Text("Artist"),
-                  2:Text("Albums")
-                },
-              ),
+          Container(
+            decoration: BoxDecoration(
+              color: Couleurs.grey100,
+              borderRadius: BorderRadius.circular(20),
             ),
-          ),     
-          const Align(
-            alignment: Alignment.topCenter,
-            child: Text('Tempo da collage', style: TextStyle(fontFamily: 'Barlow', fontSize: 20, color: Couleurs.white, fontWeight: FontWeight.bold),)
-          ),                                                                                       
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Align(
-              alignment: Alignment.topCenter,
-              child: CupertinoSlidingSegmentedControl(
-                backgroundColor: Couleurs.primaryColor,
-                onValueChanged: (int? value) { 
-                  setState(() {
-                    _sliding2 = value;
-                  });
-                  },
-                groupValue: _sliding2,
-                children: const {
-                  0:Text("OverAll"),
-                  1:Text("7 days"),
-                  2:Text("1 month")
-                },
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  const Align(
+                    alignment: Alignment.topLeft,
+                    child: Text('Tipo de collage', style: TextStyle(fontFamily: 'Barlow', fontSize: 18, color: Couleurs.white, fontWeight: FontWeight.bold),)),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: CupertinoSlidingSegmentedControl(
+                        backgroundColor: Couleurs.primaryColor,
+                        onValueChanged: (int? value) { 
+                          setState(() {
+                            _sliding1 = value;
+                          });
+                          },
+                        groupValue: _sliding1,
+                        children: const {
+                          0:Text("Track"),
+                          1:Text("Artist"),
+                          2:Text("Albums")
+                        },
+                      ),
+                    ),
+                  ),     
+                  const Align(
+                    alignment: Alignment.topLeft,
+                    child: Text('Tempo da collage', style: TextStyle(fontFamily: 'Barlow', fontSize: 18, color: Couleurs.white, fontWeight: FontWeight.bold),)
+                  ),                                                                                       
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: CupertinoSlidingSegmentedControl(
+                        backgroundColor: Couleurs.primaryColor,
+                        onValueChanged: (int? value) { 
+                          setState(() {
+                            _sliding2 = value;
+                          });
+                          },
+                        groupValue: _sliding2,
+                        children: const {
+                          0:Text("OverAll"),
+                          1:Text("7 days"),
+                          2:Text("1 month")
+                        },
+                      ),
+                    ),
+                  ),
+                  const Align(
+                    alignment: Alignment.topLeft,
+                    child: Text('Tamanho da collage', style: TextStyle(fontFamily: 'Barlow', fontSize: 18, color: Couleurs.white, fontWeight: FontWeight.bold),)),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: CupertinoSlidingSegmentedControl(
+                        backgroundColor: Couleurs.primaryColor,
+                        onValueChanged: (int? value) { 
+                          setState(() {
+                            _sliding3 = value;
+                          });
+                          },
+                        groupValue: _sliding3,
+                        children: const {
+                          0:Text("3x3"),
+                          1:Text("4x4"),
+                          2:Text("5x5")
+                        },
+                      ),
+                    ),
+                  ),                                    
+                ],
               ),
             ),
           ),
-          const Align(
-            alignment: Alignment.topCenter,
-            child: Text('Tamanho da collage', style: TextStyle(fontFamily: 'Barlow', fontSize: 20, color: Couleurs.white, fontWeight: FontWeight.bold),)),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Align(
-              alignment: Alignment.topCenter,
-              child: CupertinoSlidingSegmentedControl(
-                backgroundColor: Couleurs.primaryColor,
-                onValueChanged: (int? value) { 
-                  setState(() {
-                    _sliding3 = value;
-                  });
-                  },
-                groupValue: _sliding3,
-                children: const {
-                  0:Text("3x3"),
-                  1:Text("4x4"),
-                  2:Text("5x5")
-                },
-              ),
-            ),
-          ),
-          SizedBox(height: height * 0.05),
+          SizedBox(height: height * 0.02),
           Center(
             child: _loading ? const LoadingCollage(width: 75) : ElevatedButton(
               style: ElevatedButton.styleFrom(backgroundColor: Couleurs.primaryColor),
@@ -106,19 +119,20 @@ class _CollageState extends State<Collage> {
                 var tipo = getTipo(_sliding1);                
                 var time = getTime(_sliding2);              
                 var size = getSize(_sliding3);                
-                await ApiCollage.gerarCollage(tipo, time, size).then((value) {
+                  await ApiCollage.gerarCollage(tipo, time, size).then((value) {
                   setState(() => _loading = !_loading);
-                  _openDialog(context, value);
-                });                
+                  value.isNotEmpty ? _openDialogSuccess(context, value) : _openDialogError(context);
+                });             
               }, 
-              child: const  Text('Gerar Collage', style: TextStyle(fontFamily: "Barlow")),
+              child: const  Text('Generate', style: TextStyle(fontFamily: "Barlow")),
             ),
           ), 
         ],
       ),
     );
   }
-    void _openDialog(BuildContext context, String filename){
+
+  void _openDialogSuccess(BuildContext context, String filename){
     showGeneralDialog(    
       context: context, 
       pageBuilder: (context, animation, secondaryAnimation) => Container(),
@@ -133,14 +147,52 @@ class _CollageState extends State<Collage> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const Done(),
-                  const Text('Collage gerada com sucesso!', style: TextStyle(fontFamily: "Barlow")),
+                  const Text('Collage gerada com sucesso!', style: TextStyle(fontFamily: "Barlow", color: Couleurs.white)),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor: Couleurs.primaryColor),onPressed: () { Navigator.pop(context); File(filename).delete(recursive: true);}, child: const Text("Close", style: TextStyle(fontFamily: "Barlow"))),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor: Couleurs.primaryColor),onPressed: () => OpenFile.open(filename), child: const Text("Open", style: TextStyle(fontFamily: "Barlow"))),
+                      ),                      
+                    ],
+                  )
+                ],
+              ),
+              shape: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(16.0),
+                borderSide: BorderSide.none,
+              ),
+            ),
+          ),
+        ),
+    );
+  }
+
+  void _openDialogError(BuildContext context){
+    showGeneralDialog(    
+      context: context, 
+      pageBuilder: (context, animation, secondaryAnimation) => Container(),
+      transitionBuilder: (context, animation, secondaryAnimation, child) 
+        => ScaleTransition(
+          scale: Tween<double>(begin: 0.5,end: 1.0).animate(animation),
+          child: FadeTransition(
+            opacity: Tween<double>(begin: 0.5,end: 1.0).animate(animation),
+            child: AlertDialog(
+              backgroundColor: Couleurs.grey200,                              
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(Icons.error, color: Couleurs.primaryColor, size: 50),
+                  const Text('Erro ao gerar a collage', style: TextStyle(fontFamily: "Barlow", color: Couleurs.white)),
+                  const Text('Tente novamente', style: TextStyle(fontFamily: "Barlow", color: Couleurs.white)),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor: Couleurs.primaryColor),onPressed: () => OpenFile.open(filename), child: const Text("Open", style: TextStyle(fontFamily: "Barlow"))),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor: Couleurs.primaryColor),onPressed: () => Navigator.pop(context), child: const Text("Close", style: TextStyle(fontFamily: "Barlow"))),
+                    child: ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor: Couleurs.primaryColor),onPressed: () { Navigator.pop(context);}, child: const Text("Close", style: TextStyle(fontFamily: "Barlow"))),
                   )
                 ],
               ),
