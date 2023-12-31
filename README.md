@@ -35,6 +35,8 @@ Esse projeto foi desenvolvido utilizando as seguintes tecnologias:
 ### Aplicação do filtro
 ![](https://github.com/vlopess/MyCollageFm/blob/master/images/tela2.png)
 ![](https://github.com/vlopess/MyCollageFm/blob/master/images/video_2.gif)
+### Criando a Collage
+![](https://github.com/vlopess/MyCollageFm/blob/master/images/video_3.gif)
 
 
 ## Feedback
