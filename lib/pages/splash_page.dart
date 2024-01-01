@@ -50,19 +50,22 @@ class _SplashPageState extends State<SplashPage> {
                 height: height * 0.65,
                 child: Column(
                   children: [
-                    SizedBox(
-                      height: height * 0.55,
-                      child: const Center(
-                        child: Text(
-                          "MyCollageFm",
-                          style: TextStyle(
-                            fontSize: 40,
-                            fontWeight: FontWeight.bold,
-                            color: Couleurs.primaryColor,
-                            fontFamily: "Barlow"
+                    Hero(
+                      tag: 'name_app',
+                      child: SizedBox(
+                        height: height * 0.55,
+                        child: const Center(
+                          child: Text(
+                            "MyCollageFm",
+                            style: TextStyle(
+                              fontSize: 40,
+                              fontWeight: FontWeight.bold,
+                              color: Couleurs.primaryColor,
+                              fontFamily: "Barlow"
+                            ),
                           ),
-                        ),
-                      ),              
+                        ),              
+                      ),
                     ),
                   ],
                 ),

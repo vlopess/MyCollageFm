@@ -59,19 +59,22 @@ class _LoginState extends State<Login> {
                 height: height * 0.65,
                 child: Column(
                   children: [
-                    const SizedBox(
-                      height: 180,
-                      child: Center(
-                        child: Text(
-                          "MyCollageFm",
-                          style: TextStyle(
-                            fontSize: 40,
-                            fontWeight: FontWeight.bold,
-                            color: Couleurs.primaryColor,
-                            fontFamily: "Barlow"
+                    const Hero(
+                      tag: 'name_app',
+                      child:  SizedBox(
+                        height: 180,
+                        child: Center(
+                          child: Text(
+                            "MyCollageFm",
+                            style: TextStyle(
+                              fontSize: 40,
+                              fontWeight: FontWeight.bold,
+                              color: Couleurs.primaryColor,
+                              fontFamily: "Barlow"
+                            ),
                           ),
-                        ),
-                      ),              
+                        ),              
+                      ),
                     ),
                     SizedBox(
                       width: width * 0.70,
