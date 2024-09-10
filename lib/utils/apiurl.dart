@@ -19,7 +19,7 @@ abstract class Method {
   static String getlovedtracksUser(String userName) => '$_usergetlovedtracks&user=$userName&limit=10';
 
   static const String _usergetrecenttracks = 'method=user.getrecenttracks';
-  static String getrecenttracksUser(String userName) => '$_usergetrecenttracks&user=$userName&limit=10';
+  static String getrecenttracksUser(String userName) => '$_usergetrecenttracks&user=$userName&limit=15';
 
   static const String _usergettoptracks = 'method=user.gettoptracks';
   static String gettoptracksUser(String userName, String period, int limit) => '$_usergettoptracks&user=$userName&limit=$limit&period=$period';

@@ -1,12 +1,19 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:my_collage_fm/firebase_options.dart';
 import 'package:my_collage_fm/models/user.dart';
 import 'package:my_collage_fm/pages/home/home_page.dart';
 import 'package:my_collage_fm/pages/login_page.dart';
 import 'package:my_collage_fm/pages/splash_page.dart';
 import 'package:my_collage_fm/service/prefs_service.dart';
 import 'package:my_collage_fm/utils/couleurs.dart';
-void main() {
-  runApp(const MyApp());
+void main() async {  
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform
+  );
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -17,11 +24,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-          colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Couleurs.primaryColor)
-        ),
+          appBarTheme: const AppBarTheme(
+            backgroundColor: Couleurs.secondary,
+            foregroundColor: Colors.white, 
+          ),
+      ),
       debugShowCheckedModeBanner: false,
       home: const Authenticate(),
-      //const Authenticate(),
       routes: {
         '/login' : (_) => const Login(),
       },
@@ -31,9 +40,9 @@ class MyApp extends StatelessWidget {
 
 class Authenticate extends StatelessWidget {
   const Authenticate({super.key});
-
+    
 @override
-Widget build(BuildContext context) {
+Widget build(BuildContext context) {   
   return FutureBuilder(
     future: auth(), 
     builder: (context, snapshot) {
@@ -51,7 +60,7 @@ Widget build(BuildContext context) {
   );
 }
 
-  
+    
   Future<User?> auth() async{
       var userName = await SharedPreference.getUsername();
       var userImage = await SharedPreference.getUserImage();

@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "832503260217",
+    "project_id": "mymusictaste-8fb0d",
+    "storage_bucket": "mymusictaste-8fb0d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:832503260217:android:d54e912f465811f8e6d9e8",
+        "android_client_info": {
+          "package_name": "com.example.mycollagefm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "832503260217-lgaf55fdpbol7n3u2u9qhr6muvjochhj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mycollagefm",
+            "certificate_hash": "c8b021ff2d7b3cd5f951b63bae79faa6d0750f8a"
+          }
+        },
+        {
+          "client_id": "832503260217-bk046hmm2d8telt73rdkjlp9ppptsie5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSMe69MyID0EW-jMmWjQ1PzZuraO33438"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "832503260217-bk046hmm2d8telt73rdkjlp9ppptsie5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "832503260217-7c9n78jgv4q3flv37tqlsbmjpe2hj9ji.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.mymusictaste"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

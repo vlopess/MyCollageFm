@@ -13,13 +13,21 @@ Widget lovedTrackComponent({required List<Track> tracks}) => Padding(
           alignment: Alignment.topLeft,
           child: Row(
             children: [              
-              Text('Loved Tracks', style: TextStyle(fontFamily: 'Barlow', fontSize: 20, color: Couleurs.white, fontWeight: FontWeight.bold),),
+              Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text('Loved Tracks', style: TextStyle(fontFamily: 'Barlow', fontSize: 20, color: Couleurs.white, fontWeight: FontWeight.bold),),
+              ),
               Icon(Icons.favorite, color: Colors.red,),
             ],
           )),
-        SizedBox(
+        Container(
+          decoration: BoxDecoration(
+            color: Couleurs.greyMedium,
+            borderRadius: BorderRadius.circular(20),
+          ),
           height: 200,
           child: ListView.separated(
+            physics: const BouncingScrollPhysics(),
             padding: const EdgeInsets.all(16),
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) => buildCardTrack(track: tracks[index]), 

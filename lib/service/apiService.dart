@@ -54,22 +54,22 @@ class ApiService {
     return lovedtracks;
   }
 
-  static Future<Track?> getrecenttracksUser() async{
+  static Future<List<Track>?> getrecenttracksUser() async{
     var userName = await SharedPreference.getUsername();
     var url = Uri.parse(ApiUrl.buildUrl(Method.getrecenttracksUser(userName), apiKey));
     var responsed =  await http.get(url);
-    Track recentTrack = Track();
+    List<Track> recentTrack = List.empty();
     if (responsed.statusCode == 200) {
       var list = jsonDecode(responsed.body);
       list = list['recenttracks'];
       if(list['track'].isNotEmpty){
-          recentTrack = List<Track>.from((list['track'] as List<dynamic>).map<Track>((x) => Track.fromJson(x as Map<String, dynamic>))).first;
+          recentTrack = List<Track>.from((list['track'] as List<dynamic>).map<Track>((x) => Track.fromJson(x as Map<String, dynamic>)));
       }          
     }
     return recentTrack;
   }
 
-  static Future<List<Track>?> gettoptracksUser({String period = 'overall', int limit = 10}) async{
+  static Future<List<Track>?> gettoptracksUser({String period = 'overall', int limit = 15}) async{
     List<Track>? toptracks;
     var userName = await SharedPreference.getUsername();
     var url = Uri.parse(ApiUrl.buildUrl(Method.gettoptracksUser(userName, period, limit), apiKey));
@@ -109,7 +109,7 @@ class ApiService {
     return toptracks;
   }
 
-  static Future<List<Artist>?> gettopartistsUser({String period = 'overall', int limit = 10}) async{
+  static Future<List<Artist>?> gettopartistsUser({String period = 'overall', int limit = 15}) async{
     var userName = await SharedPreference.getUsername();
     List<Artist>? topartists;
     var url = Uri.parse(ApiUrl.buildUrl(Method.gettopartistsUser(userName, period, limit), apiKey));
@@ -124,8 +124,11 @@ class ApiService {
         if(responsed.statusCode == 200){
           var list = jsonDecode(responsed.body);
           if(list['topalbums']['album'] != null){
-            var realImage = list['topalbums']['album'][0]['image'][3]['#text'];
-            e.image = realImage;
+            var lista = list['topalbums']['album'] as List<dynamic>;
+            if (lista.isNotEmpty) {
+              var realImage = list['topalbums']['album'][0]['image'][3]['#text'];
+              e.image = realImage;
+            }
           }
         }
         e.image = verificarImagem(e.image);
@@ -134,7 +137,7 @@ class ApiService {
     return topartists;
   }
 
-  static Future<List<Album>?> gettopalbumsUser({String period = 'overall', int limit = 10}) async{
+  static Future<List<Album>?> gettopalbumsUser({String period = 'overall', int limit = 15}) async{
     var userName = await SharedPreference.getUsername();
     var url = Uri.parse(ApiUrl.buildUrl(Method.gettopalbumsUser(userName, period, limit), apiKey));
     List<Album>? topalbums;
@@ -146,5 +149,7 @@ class ApiService {
     } 
     return topalbums;
   }
+
+
 
 }

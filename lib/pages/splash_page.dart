@@ -56,7 +56,7 @@ class _SplashPageState extends State<SplashPage> {
                         height: height * 0.55,
                         child: const Center(
                           child: Text(
-                            "MyCollageFm",
+                            "MyMusicTaste",
                             style: TextStyle(
                               fontSize: 40,
                               fontWeight: FontWeight.bold,

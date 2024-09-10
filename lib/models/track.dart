@@ -6,6 +6,7 @@ class Track {
   String? url;
   String? name;
   String? image;
+  String? album;
   String? playnow;
 
   Track(
@@ -13,6 +14,7 @@ class Track {
       this.url='',
       this.name='',
       this.image='',
+      this.album='',
       this.playnow});
 
   Track.fromJson(Map<String, dynamic> json) {
@@ -27,6 +29,10 @@ class Track {
     if(json['@attr'] != null) {
       playnow = json['@attr']['nowplaying'];
     }
+    album = '';
+    if (json['album'] != null) {
+      album = formatar(json['album']['#text']);      
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -36,6 +42,7 @@ class Track {
     data['name'] = this.name;
     data['image'] = this.image;
     data['nowplaying'] = this.playnow;
+    data['album'] = this.album;
     return data;
   }
 }

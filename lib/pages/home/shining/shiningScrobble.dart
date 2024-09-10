@@ -21,8 +21,8 @@ class ShiningScrobble extends StatelessWidget {
             child: Shimmer.fromColors(
               baseColor: Colors.grey.shade900, highlightColor: Couleurs.grey200, period: const Duration(milliseconds: 2000),
               child: Container(
-                height: 75,
-                decoration: BoxDecoration(color: Couleurs.grey100,borderRadius: BorderRadius.circular(15.0))
+                height: 100,
+                decoration: BoxDecoration(color: Couleurs.secondary,borderRadius: BorderRadius.circular(15.0))
               ),
             ),
           ),

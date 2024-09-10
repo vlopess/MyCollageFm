@@ -22,9 +22,14 @@ class ShiningLovedTracks extends StatelessWidget {
                 Icon(Icons.favorite, color: Colors.red,),
               ],
             )),
-          SizedBox(
+          Container(
+            decoration: const BoxDecoration(
+              color: Couleurs.greyMedium,
+              borderRadius: BorderRadius.all(Radius.circular(20))
+            ),
             height: 130,
             child: ListView.separated(
+              physics: const BouncingScrollPhysics(),
               padding: const EdgeInsets.all(16),
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) => Shimmer.fromColors(

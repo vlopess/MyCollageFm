@@ -11,22 +11,28 @@ import 'package:path_provider/path_provider.dart';
 class ApiCollage {
 
   static String address = "https://victorsites.pythonanywhere.com/api/v1/generateCollage";
+  //static String address = "http://192.168.10.14:5000/api/v1/generateCollage";
 
   static Future<String> gerarCollage(String tipo, String time, int size) async {
       int limit = size * size;
       String period = time;
       Dto dto = Dto(null,id: idGenerator(), size: size);
-      if(tipo.compareTo('track') == 0) {
-        var tracks = await ApiService.gettoptracksUser(period: period, limit: limit);
-        dto.setCellListTrack(tracks!);
-      }
-      if(tipo.compareTo('artist') == 0) {
-        var artists = await  ApiService.gettopartistsUser(period: period, limit: limit);
-        dto.setCellListArtist(artists!);
-      }
-      if(tipo.compareTo('album') == 0) {
-        var albums = await ApiService.gettopalbumsUser(period: period, limit: limit);
-        dto.setCellListAlbum(albums!);
+      try {
+        if(tipo.compareTo('track') == 0) {
+          var tracks = await ApiService.gettoptracksUser(period: period, limit: limit);
+          dto.setCellListTrack(tracks!);
+        }
+        if(tipo.compareTo('artist') == 0) {
+          var artists = await  ApiService.gettopartistsUser(period: period, limit: limit);
+          dto.setCellListArtist(artists!);
+        }
+        if(tipo.compareTo('album') == 0) {
+          var albums = await ApiService.gettopalbumsUser(period: period, limit: limit);
+          dto.setCellListAlbum(albums!);
+        }        
+      // ignore: empty_catches
+      } catch (e) {
+        
       }
       return await generateCollage(dto);
       

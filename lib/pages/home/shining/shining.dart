@@ -17,12 +17,20 @@ class Shining extends StatelessWidget {
             alignment: Alignment.topLeft,
             child: Row(
               children: [              
-                Text(title, style: const TextStyle(fontFamily: 'Barlow', fontSize: 20, color: Couleurs.white, fontWeight: FontWeight.bold),),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(title, style: const TextStyle(fontFamily: 'Barlow', fontSize: 20, color: Couleurs.white, fontWeight: FontWeight.bold),),
+                ),
               ],
             )),
-          SizedBox(
+          Container(
+            decoration: BoxDecoration(
+              color: Couleurs.greyMedium,
+              borderRadius: BorderRadius.circular(20),
+            ),
             height: 200,
             child: ListView.separated(
+              physics: const BouncingScrollPhysics(),
               padding: const EdgeInsets.all(16),
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) => Shimmer.fromColors(

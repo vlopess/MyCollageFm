@@ -12,7 +12,7 @@ class _ErrorState extends State<Erro> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Couleurs.grey100,
+      backgroundColor: Couleurs.secondary,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
           children: [

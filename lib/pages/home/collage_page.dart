@@ -23,111 +23,124 @@ class _CollageState extends State<Collage> {
   @override
   Widget build(BuildContext context) {
     double? height = MediaQuery.of(context).size.height;
-    return Padding(
-        padding: const EdgeInsets.all(25.0),
-        child: Column(
-          children: [
-          Container(
-            decoration: BoxDecoration(
-              color: Couleurs.grey100,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  const Align(
-                    alignment: Alignment.topLeft,
-                    child: Text('Tipo de collage', style: TextStyle(fontFamily: 'Barlow', fontSize: 18, color: Couleurs.white, fontWeight: FontWeight.bold),)),
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Align(
-                      alignment: Alignment.topLeft,
-                      child: CupertinoSlidingSegmentedControl(
-                        backgroundColor: Couleurs.primaryColor,
-                        onValueChanged: (int? value) { 
-                          setState(() {
-                            _sliding1 = value;
-                          });
-                          },
-                        groupValue: _sliding1,
-                        children: const {
-                          0:Text("Track"),
-                          1:Text("Artist"),
-                          2:Text("Albums")
-                        },
-                      ),
-                    ),
-                  ),     
-                  const Align(
-                    alignment: Alignment.topLeft,
-                    child: Text('Tempo da collage', style: TextStyle(fontFamily: 'Barlow', fontSize: 18, color: Couleurs.white, fontWeight: FontWeight.bold),)
-                  ),                                                                                       
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Align(
-                      alignment: Alignment.topLeft,
-                      child: CupertinoSlidingSegmentedControl(
-                        backgroundColor: Couleurs.primaryColor,
-                        onValueChanged: (int? value) { 
-                          setState(() {
-                            _sliding2 = value;
-                          });
-                          },
-                        groupValue: _sliding2,
-                        children: const {
-                          0:Text("OverAll"),
-                          1:Text("7 days"),
-                          2:Text("1 month")
-                        },
-                      ),
-                    ),
-                  ),
-                  const Align(
-                    alignment: Alignment.topLeft,
-                    child: Text('Tamanho da collage', style: TextStyle(fontFamily: 'Barlow', fontSize: 18, color: Couleurs.white, fontWeight: FontWeight.bold),)),
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Align(
-                      alignment: Alignment.topLeft,
-                      child: CupertinoSlidingSegmentedControl(
-                        backgroundColor: Couleurs.primaryColor,
-                        onValueChanged: (int? value) { 
-                          setState(() {
-                            _sliding3 = value;
-                          });
-                          },
-                        groupValue: _sliding3,
-                        children: const {
-                          0:Text("3x3"),
-                          1:Text("4x4"),
-                          2:Text("5x5")
-                        },
-                      ),
-                    ),
-                  ),                                    
-                ],
+    return RefreshIndicator(
+      backgroundColor: Couleurs.grey200,
+      color: Couleurs.primaryColor,
+      onRefresh: () async {
+          setState(() {});    
+      },
+      child: Padding(
+          padding: const EdgeInsets.all(25.0),
+          child: Column(
+            children: [            
+            Flexible(
+              child: SizedBox(
+                height: height * 0.35,
+                child: Image.asset("assets/png/Music-bro.png")
               ),
             ),
-          ),
-          SizedBox(height: height * 0.02),
-          Center(
-            child: _loading ? const LoadingCollage(width: 75) : ElevatedButton(
-              style: ElevatedButton.styleFrom(backgroundColor: Couleurs.primaryColor),
-              onPressed: () async{
-                setState(() => _loading = !_loading);
-                var tipo = getTipo(_sliding1);                
-                var time = getTime(_sliding2);              
-                var size = getSize(_sliding3);                
-                  await ApiCollage.gerarCollage(tipo, time, size).then((value) {
-                  setState(() => _loading = !_loading);
-                  value.isNotEmpty ? _openDialogSuccess(context, value) : _openDialogError(context);
-                });             
-              }, 
-              child: const  Text('Generate', style: TextStyle(fontFamily: "Barlow")),
+            Container(
+              decoration: BoxDecoration(
+                color: Couleurs.greyMedium,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    const Align(
+                      alignment: Alignment.topLeft,
+                      child: Text('Collage Type', style: TextStyle(fontFamily: 'Barlow', fontSize: 18, color: Couleurs.white, fontWeight: FontWeight.bold),)),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: CupertinoSlidingSegmentedControl(
+                          backgroundColor: Couleurs.primaryColor,
+                          onValueChanged: (int? value) { 
+                            setState(() {
+                              _sliding1 = value;
+                            });
+                            },
+                          groupValue: _sliding1,
+                          children: const {
+                            0:Text("Track"),
+                            1:Text("Artist"),
+                            2:Text("Albums")
+                          },
+                        ),
+                      ),
+                    ),     
+                    const Align(
+                      alignment: Alignment.topLeft,
+                      child: Text('Time Period', style: TextStyle(fontFamily: 'Barlow', fontSize: 18, color: Couleurs.white, fontWeight: FontWeight.bold),)
+                    ),                                                                                       
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: CupertinoSlidingSegmentedControl(
+                          backgroundColor: Couleurs.primaryColor,
+                          onValueChanged: (int? value) { 
+                            setState(() {
+                              _sliding2 = value;
+                            });
+                            },
+                          groupValue: _sliding2,
+                          children: const {
+                            0:Text("OverAll"),
+                            1:Text("7 days"),
+                            2:Text("1 month")
+                          },
+                        ),
+                      ),
+                    ),
+                    const Align(
+                      alignment: Alignment.topLeft,
+                      child: Text('Dimensions', style: TextStyle(fontFamily: 'Barlow', fontSize: 18, color: Couleurs.white, fontWeight: FontWeight.bold),)),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: CupertinoSlidingSegmentedControl(
+                          backgroundColor: Couleurs.primaryColor,
+                          onValueChanged: (int? value) { 
+                            setState(() {
+                              _sliding3 = value;
+                            });
+                            },
+                          groupValue: _sliding3,
+                          children: const {
+                            0:Text("3x3"),
+                            1:Text("4x4"),
+                            2:Text("5x5")
+                          },
+                        ),
+                      ),
+                    ),                                    
+                  ],
+                ),
+              ),
             ),
-          ), 
-        ],
+            SizedBox(height: height * 0.02),
+            Center(
+              child: _loading ? const LoadingCollage(width: 75) : ElevatedButton(
+                style: ElevatedButton.styleFrom(backgroundColor: Couleurs.primaryColor),
+                onPressed: () async{
+                  setState(() => _loading = !_loading);
+                  var tipo = getTipo(_sliding1);                
+                  var time = getTime(_sliding2);              
+                  var size = getSize(_sliding3);                
+                    await ApiCollage.gerarCollage(tipo, time, size).then((value) {
+                    setState(() => _loading = !_loading);
+                    value.isNotEmpty ? _openDialogSuccess(context, value) : _openDialogError(context);
+                  });             
+                }, 
+                child: const  Text('Generate', style: TextStyle(fontFamily: "Barlow", color: Couleurs.white)),
+              ),
+            ), 
+          ],
+        ),
       ),
     );
   }
@@ -147,17 +160,17 @@ class _CollageState extends State<Collage> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const Done(),
-                  const Text('Collage gerada com sucesso!', style: TextStyle(fontFamily: "Barlow", color: Couleurs.white)),
+                  const Text('Successfully generated collage!', style: TextStyle(fontFamily: "Barlow", color: Couleurs.white)),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor: Couleurs.primaryColor),onPressed: () { Navigator.pop(context); File(filename).delete(recursive: true);}, child: const Text("Close", style: TextStyle(fontFamily: "Barlow"))),
+                        child: ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor: Couleurs.primaryColor),onPressed: () { Navigator.pop(context); File(filename).delete(recursive: true);}, child: const Text("Close", style: TextStyle(fontFamily: "Barlow", color: Couleurs.white))),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor: Couleurs.primaryColor),onPressed: () => OpenFile.open(filename), child: const Text("Open", style: TextStyle(fontFamily: "Barlow"))),
+                        child: ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor: Couleurs.primaryColor),onPressed: () { Navigator.pop(context); OpenFile.open(filename);}, child: const Text("Open", style: TextStyle(fontFamily: "Barlow", color: Couleurs.white))),
                       ),                      
                     ],
                   )
