@@ -2,7 +2,7 @@
 <img width=100% src="https://capsule-render.vercel.app/api?type=waving&color=861d1d&height=120&section=header"/>
 
 <h1 align="center">    
-  <img style="width:100px; height:100px; left: 0; bottom:0; right:0;top:0;position:absolute;" src='https://github.com/vlopess/MyMusicTaste/blob/master/assets/logo.png'></img>
+  <img style="width:100px; height:100px; left: 0; bottom:0; right:0;top:0;position:absolute;" src='https://github.com/vlopess/MyMusicTaste/blob/master/assets/png/logo.png'></img>
 </h1>
 <h1 align="center">    
   <b>MyMusicTaste</b>  
@@ -37,7 +37,6 @@ Esse projeto foi desenvolvido utilizando as seguintes tecnologias:
 ![](https://github.com/vlopess/MyMusicTaste/blob/master/images/video_2.gif)
 ### Criando a Collage
 ![](https://github.com/vlopess/MyMusicTaste/blob/master/images/video_3.gif)
-
 
 ## Feedback
 
