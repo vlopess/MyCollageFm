@@ -49,9 +49,9 @@ class UserService {
     if(userDTO != null){
       String uid = auth.currentUser!.uid;
       if(nostalgiaTrackRegister.image != null){
-        String path = 'nostalgiaTracks/$uid${nostalgiaTrackRegister.image?.path}';
-        await ref.read(firebaseStorageRepository).storeFileToFirebase(path, nostalgiaTrackRegister.image!);
-        nostalgiaTrackRegister.imageUrl = path;
+        String path = 'nostalgiaTracks/$uid/${nostalgiaTrackRegister.image?.path}';
+        nostalgiaTrackRegister.path = path;
+        nostalgiaTrackRegister.imageUrl = await ref.read(firebaseStorageRepository).storeFileToFirebase(path, nostalgiaTrackRegister.image!);
       }
       userDTO.nostalgiaTracks.add(nostalgiaTrackRegister);
       await firestore.collection('users').doc(uid).update({
@@ -111,7 +111,7 @@ class UserService {
     if(userDTO != null){
       String uid = auth.currentUser!.uid;      
       userDTO.nostalgiaTracks.removeWhere((element) => element!.imageUrl == nostalgiaTrack.imageUrl);
-      await ref.read(firebaseStorageRepository).deleteFileToFirebase(nostalgiaTrack.imageUrl!);
+      await ref.read(firebaseStorageRepository).deleteFileToFirebase(nostalgiaTrack.path!);
       await firestore.collection('users').doc(uid).update({
         'nostalgiaTracks': userDTO.nostalgiaTracks.map((x) => x?.toMap()).toList(),
       }); 

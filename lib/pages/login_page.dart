@@ -113,11 +113,12 @@ class _LoginState extends ConsumerState<Login> {
                                 });       
                                 try {
                                   await controller.findUser().then((user) async {
+                                    SharedPreference.save(user);
                                     await ref.read(userService).getCurrentUser(); 
                                     bool isFirstAccess = await SharedPreference.isFirstAccess();   
                                     if(isFirstAccess) await Navigator.push(context, MaterialPageRoute(builder: (context) => const TutorialPage()));
 
-                                    SharedPreference.save(user);
+                                    FocusScope.of(context).unfocus();
                                     Navigator.push(context, MaterialPageRoute(builder: (context) => Home(userName: user.name!, userImage: user.image!,userUrl: user.url!,)));
                                   });                            
                                 } catch (e) {

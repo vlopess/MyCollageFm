@@ -10,22 +10,26 @@ class NostalgiaTrack {
   String? description;
   File? image;
   String? imageUrl;
+  String? path;
   TrackDTO? track;
   NostalgiaTrack({
     this.description,
     this.image,
     this.imageUrl,
+    this.path,
     this.track,
   });
 
   NostalgiaTrack copyWith({
     String? description,
     String? imageUrl,
+    String? path,
     TrackDTO? track,
   }) {
     return NostalgiaTrack(
       description: description ?? this.description,
       imageUrl: imageUrl ?? this.imageUrl,
+      path: path ?? this.path,
       track: track ?? this.track,
     );
   }
@@ -34,6 +38,7 @@ class NostalgiaTrack {
     return <String, dynamic>{
       'description': description,
       'imageUrl': imageUrl,
+      'path': path,
       'track': track?.toJson(),
     };
   }
@@ -42,6 +47,7 @@ class NostalgiaTrack {
     return NostalgiaTrack(
       description: map['description'] != null ? map['description'] as String : null,
       imageUrl: map['imageUrl'] != null ? map['imageUrl'] as String : null,
+      path: map['path'] != null ? map['path'] as String : null,
       track: map['track'] != null ? TrackDTO.fromJson(map['track'] as Map<String,dynamic>) : null,
     );
   }
@@ -49,6 +55,7 @@ class NostalgiaTrack {
     return NostalgiaTrack(
       description: obj['description'],
       imageUrl: obj['imageUrl'],
+      path: obj['path'],
       track: TrackDTO.fromJson(obj['track'])
     );
   }
