@@ -4,10 +4,12 @@
 <h1 align="center">    
   <img style="width:100px; height:100px; left: 0; bottom:0; right:0;top:0;position:absolute;" src='https://github.com/vlopess/MyMusicTaste/blob/master/assets/png/logo.png'></img>
 </h1>
-<h1 align="center">    
-  <b>MyMusicTaste</b>  
-  <br>
-</h1>
+<div align="center">    
+  <h1>MyMusicTaste</h1>  
+  <i>Track your stats, save your memories, and generate stunning collages — all in one place!</i>
+</div>
+<br>
+
 
 ![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=DESENVOLVIMENTO&color=GREEN&style=for-the-badge)
 
@@ -15,17 +17,16 @@
 
 ![](https://github.com/vlopess/MyMusicTaste/blob/master/images/tela3.png)
 
-## Funcionalidades
-
-- [x] Listagem e filtragem dos dados do usuário
-- [x] Scrobbling now
-- [x] Uso de ImageUrl
-- [x] Gerar Collage 
+## Features
+- **Login de usuários**: Acesso pela conta Google.
+- **Track Your Stats**: Monitore suas estátisticas do _Lastfm_.
+- **Save Your Memories**: Salve memórias facilmente com suas músicas e fotos favoritas.
+- **Generate Collages**: Crie colagens de suas músicas, artistas e álbuns mais ouvidos em uma faixa de tempo.
 
 ## Tecnologias utilizadas
 Esse projeto foi desenvolvido utilizando as seguintes tecnologias:
 
-![](https://skillicons.dev/icons?i=dart,flutter)
+![](https://skillicons.dev/icons?i=dart,flutter,firebase)
 
 ## Demonstração
 
