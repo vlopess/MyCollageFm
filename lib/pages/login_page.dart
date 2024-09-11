@@ -115,11 +115,12 @@ class _LoginState extends ConsumerState<Login> {
                                   await controller.findUser().then((user) async {
                                     SharedPreference.save(user);
                                     await ref.read(userService).getCurrentUser(); 
-                                    bool isFirstAccess = await SharedPreference.isFirstAccess();   
-                                    if(isFirstAccess) await Navigator.push(context, MaterialPageRoute(builder: (context) => const TutorialPage()));
-
-                                    FocusScope.of(context).unfocus();
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => Home(userName: user.name!, userImage: user.image!,userUrl: user.url!,)));
+                                    bool isFirstAccess = await SharedPreference.isFirstAccess();
+                                    bool? hasSeeTutorial = false;   
+                                    FocusManager.instance.primaryFocus?.unfocus();
+                                    if(isFirstAccess) hasSeeTutorial = await Navigator.push(context, MaterialPageRoute(builder: (context) => const TutorialPage()));
+                                    FocusManager.instance.primaryFocus?.unfocus();
+                                    if(hasSeeTutorial != null && hasSeeTutorial) Navigator.push(context, MaterialPageRoute(builder: (context) => Home(userName: user.name!, userImage: user.image!,userUrl: user.url!,)));
                                   });                            
                                 } catch (e) {
                                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(behavior: SnackBarBehavior.floating,elevation: 0, backgroundColor: Colors.transparent,content: SnackBarCustom(title: 'User not Found', cor: Couleurs.grey200)));                           
@@ -171,7 +172,7 @@ class _LoginState extends ConsumerState<Login> {
                 ),
                 Container(
                   color: Couleurs.primaryColor,
-                  height: height * 0.14,
+                  height: height * 0.16,
                   child: Center(
                     child: SizedBox(
                       width: width * 0.6,
