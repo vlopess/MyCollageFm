@@ -28,16 +28,31 @@ Esse projeto foi desenvolvido utilizando as seguintes tecnologias:
 
 ![](https://skillicons.dev/icons?i=dart,flutter,firebase)
 
+
 ## Demonstração
 
-### Login e listagem
-![](https://github.com/vlopess/MyMusicTaste/blob/master/images/video_1.gif)
-![](https://github.com/vlopess/MyMusicTaste/blob/master/images/tela1.png)
-### Aplicação do filtro
-![](https://github.com/vlopess/MyMusicTaste/blob/master/images/tela2.png)
-![](https://github.com/vlopess/MyMusicTaste/blob/master/images/video_2.gif)
+### Login
+
+
+https://github.com/user-attachments/assets/b1fed1ba-ae6e-4456-a3a9-db2ba0c7ec4a
+
+
+
+### Home
+
+https://github.com/user-attachments/assets/a3832067-a17d-425a-a79c-3d5a0f2ef5a4
+
+<img src="https://github.com/vlopess/MyMusicTaste/blob/master/.github/images/home.jpeg" alt="Exemplo de Imagem" width="500"/>
+
 ### Criando a Collage
-![](https://github.com/vlopess/MyMusicTaste/blob/master/images/video_3.gif)
+
+
+https://github.com/user-attachments/assets/eea7f857-61e4-43b5-80cf-e3eeb855d464
+
+### Track Nostalgia (New Feature)
+<img src="https://github.com/user-attachments/assets/673dfca3-84ad-4ebb-8e06-ab5eb3a9de91" alt="Exemplo de Imagem" width="500"/>
+<img src="https://github.com/user-attachments/assets/179a6579-8e4b-4169-ab52-cd26c1c8174a" alt="Exemplo de Imagem" width="500"/>
+
 
 ## Feedback
 
