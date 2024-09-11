@@ -23,7 +23,7 @@ class _TutorialPageState extends State<TutorialPage> {
           children: [
             Container(
               margin: const EdgeInsets.all(10),
-              width: size.width * 0.85,
+              width: size.width * 0.8,
               height: size.height * 0.8,
               child: PageView(
                 physics: const BouncingScrollPhysics(),
@@ -34,30 +34,28 @@ class _TutorialPageState extends State<TutorialPage> {
                 },
                 children: [
                   Scrollbar(
-                    child: Column(
-                      children: [
-                        Center(
-                          child: Flexible(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          Center(
                             child: SizedBox(
                               height: size.height * 0.6,
                               child: Image.asset("assets/png/femme1.png")
                             ),
                           ),
-                        ),
-                        const Text("Welcome to MyMusicTaste!", overflow: TextOverflow.ellipsis, style: TextStyle(fontFamily: "Barlow", fontWeight: FontWeight.bold, fontSize: 17, color: Couleurs.primaryColor)),
-                        const Text("A place to track your stats, save your best feelings about music and make collages.", overflow: TextOverflow.visible, textAlign: TextAlign.center,style: TextStyle(fontFamily: "Barlow", fontWeight: FontWeight.bold, fontSize: 17, color: Couleurs.white))
-                      ],
+                          const Text("Welcome to MyMusicTaste!", overflow: TextOverflow.ellipsis, style: TextStyle(fontFamily: "Barlow", fontWeight: FontWeight.bold, fontSize: 17, color: Couleurs.primaryColor)),
+                          const Text("A place to track your stats, save your best feelings about music and make collages.", overflow: TextOverflow.visible, textAlign: TextAlign.center,style: TextStyle(fontFamily: "Barlow", fontWeight: FontWeight.bold, fontSize: 17, color: Couleurs.white))
+                        ],
+                      ),
                     ),
                   ),  
                   Scrollbar(
                     child: Column(
                       children: [
                         Center(
-                          child: Flexible(
-                            child: SizedBox(
-                              height: size.height * 0.6,
-                              child: Image.asset("assets/png/femme2.png")
-                            ),
+                          child: SizedBox(
+                            height: size.height * 0.6,
+                            child: Image.asset("assets/png/femme2.png")
                           ),
                         ),
                         const Text("Save your memories", overflow: TextOverflow.ellipsis, style: TextStyle(fontFamily: "Barlow", fontWeight: FontWeight.bold, fontSize: 17, color: Couleurs.primaryColor)),
@@ -69,11 +67,9 @@ class _TutorialPageState extends State<TutorialPage> {
                     child: Column(
                       children: [
                         Center(
-                          child: Flexible(
-                            child: SizedBox(
-                              height: size.height * 0.6,
-                              child: Image.asset("assets/png/femme3.png")
-                            ),
+                          child: SizedBox(
+                            height: size.height * 0.6,
+                            child: Image.asset("assets/png/femme3.png")
                           ),
                         ),
                         const Text("Generate collages", overflow: TextOverflow.ellipsis, style: TextStyle(fontFamily: "Barlow", fontWeight: FontWeight.bold, fontSize: 17, color: Couleurs.primaryColor)),
@@ -85,11 +81,9 @@ class _TutorialPageState extends State<TutorialPage> {
                     child: Column(
                       children: [
                         Center(
-                          child: Flexible(
-                            child: SizedBox(
-                              height: size.height * 0.6,
-                              child: Image.asset("assets/png/homme1.png")
-                            ),
+                          child: SizedBox(
+                            height: size.height * 0.6,
+                            child: Image.asset("assets/png/homme1.png")
                           ),
                         ),
                         const Text("Enjoy exploring MyMusicTaste!", overflow: TextOverflow.ellipsis, style: TextStyle(fontFamily: "Barlow", fontWeight: FontWeight.bold, fontSize: 17, color: Couleurs.primaryColor)),
@@ -101,7 +95,7 @@ class _TutorialPageState extends State<TutorialPage> {
                             child: MaterialButton(                              
                               splashColor: Colors.transparent,
                               minWidth: double.infinity,
-                              onPressed: () => Navigator.pop(context),
+                              onPressed: () => Navigator.pop(context, true),
                               child: const Text("Let Me In", overflow: TextOverflow.ellipsis, style: TextStyle(fontFamily: "Barlow", fontWeight: FontWeight.bold, fontSize: 17, color: Couleurs.white)),
                             ),
                           ),
