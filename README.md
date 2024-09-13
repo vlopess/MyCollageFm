@@ -42,7 +42,7 @@ https://github.com/user-attachments/assets/b1fed1ba-ae6e-4456-a3a9-db2ba0c7ec4a
 
 https://github.com/user-attachments/assets/a3832067-a17d-425a-a79c-3d5a0f2ef5a4
 
-<img src="https://github.com/vlopess/MyMusicTaste/blob/master/.github/images/home.jpeg" alt="Exemplo de Imagem" width="500"/>
+<img src="https://github.com/vlopess/MyMusicTaste/blob/master/.github/images/home.jpeg" alt="Exemplo de Imagem" width="400"/>
 
 ### Criando a Collage
 
