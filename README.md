@@ -50,8 +50,8 @@ https://github.com/user-attachments/assets/a3832067-a17d-425a-a79c-3d5a0f2ef5a4
 https://github.com/user-attachments/assets/eea7f857-61e4-43b5-80cf-e3eeb855d464
 
 ### Track Nostalgia (New Feature)
-<img src="https://github.com/user-attachments/assets/673dfca3-84ad-4ebb-8e06-ab5eb3a9de91" alt="Exemplo de Imagem" width="500"/>
-<img src="https://github.com/user-attachments/assets/179a6579-8e4b-4169-ab52-cd26c1c8174a" alt="Exemplo de Imagem" width="500"/>
+<img src="https://github.com/user-attachments/assets/673dfca3-84ad-4ebb-8e06-ab5eb3a9de91" alt="Exemplo de Imagem" width="400"/>
+<img src="https://github.com/user-attachments/assets/179a6579-8e4b-4169-ab52-cd26c1c8174a" alt="Exemplo de Imagem" width="400"/>
 
 
 ## Feedback
