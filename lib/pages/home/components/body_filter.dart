@@ -18,9 +18,9 @@ class BodyFilter extends StatefulWidget {
 
 class _BodyFilterState extends State<BodyFilter> {
   String filter = '7day';
-  bool _select1 = false;
+  bool _select1 = true;
   bool _select2 = false;
-  bool _select3 = true;
+  bool _select3 = false;
 
   @override
   Widget build(BuildContext context) {
