@@ -12,7 +12,7 @@ class ContainerNostalgiaTrackList extends ConsumerStatefulWidget {
   final IconData iconDetail;
   final void Function(NostalgiaTrack track) onPressedDetail;
   final double? height;
-  const ContainerNostalgiaTrackList({super.key,required this.title, required this.tracks, required this.iconDetail, required this.onPressedDetail,this.height = 200});
+  const ContainerNostalgiaTrackList({super.key,required this.title, required this.tracks, required this.iconDetail, required this.onPressedDetail,this.height = 300});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _ContainerNostalgiaTrackListState();

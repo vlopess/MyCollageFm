@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_collage_fm/models/nostalgia_track.dart';
+import 'package:my_collage_fm/pages/detail_image.dart';
 import 'package:my_collage_fm/pages/home/components/lovedtrackcomponent.dart';
 import 'package:my_collage_fm/utils/couleurs.dart';
 
@@ -100,7 +101,6 @@ class _NostalgiaTrackDetailState extends ConsumerState<NostalgiaTrackDetail> {
                                     borderRadius: BorderRadius.all(Radius.circular(20))
                                   ),
                                   width: width * 0.95,
-                                  height: height * 0.2,
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Text(widget.track.description!,overflow: TextOverflow.visible, textAlign: TextAlign.start,style: const TextStyle(fontFamily: "Barlow", fontWeight: FontWeight.bold, fontSize: 18, color: Colors.white)),
@@ -110,17 +110,24 @@ class _NostalgiaTrackDetailState extends ConsumerState<NostalgiaTrackDetail> {
                           ),                  
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Container(
+                          child: SizedBox(
                             width: width,
                             height: height * 0.3,
-                            decoration: const BoxDecoration(
-                              color: Couleurs.secondary,
-                              borderRadius: BorderRadius.all(Radius.circular(20))
-                            ),
-                            child: Center(
+                            child: ClipRRect(
+                              borderRadius: const BorderRadius.all(Radius.circular(15)),                                     
                               child: GestureDetector(
-                                onTap: (){},
-                                child: Image.network(widget.track.imageUrl!)
+                                onTap: (){
+                                  Navigator.push(context,
+                                    MaterialPageRoute(
+                                      builder: (context) => DetailImage(imageurl: widget.track.imageUrl!),
+                                  ));
+                                },
+                                child: CachedNetworkImage(
+                                  fit: BoxFit.cover,
+                                  imageUrl: widget.track.imageUrl!,
+                                  placeholder: (context, url) => Container(color: Colors.black12,),
+                                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                                ),
                               ),
                             ),
                           ),
